@@ -18,7 +18,6 @@ This fork accepts a custom kysely dialect which can be used directly instead of 
   const dbUri =
     `postgres://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.dbname}`;
 
-  console.log({ dbUri });
 
   const outFile = Deno.cwd() + "/db/types.ts";
   await cli.generate({
