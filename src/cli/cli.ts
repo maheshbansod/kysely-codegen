@@ -7,6 +7,7 @@ import { RuntimeEnumsStyle } from '../generator/generator/runtime-enums-style';
 import { LogLevel } from '../generator/logger/log-level';
 import { Logger } from '../generator/logger/logger';
 import type { Overrides } from '../generator/transformer/transform';
+import type { Dialect } from 'kysely';
 import {
   DateParser,
   DEFAULT_DATE_PARSER,
@@ -27,6 +28,7 @@ export type CliOptions = {
   camelCase?: boolean;
   dateParser?: DateParser;
   dialectName?: DialectName;
+  customKyselyDialect?: Dialect;
   domains?: boolean;
   envFile?: string;
   excludePattern?: string;
@@ -97,6 +99,7 @@ export class Cli {
     const db = await dialect.introspector.connect({
       connectionString,
       dialect,
+      customKyselyDialect: options.customKyselyDialect
     });
 
     await generate({
