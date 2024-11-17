@@ -1,3 +1,37 @@
+
+
+> [!NOTE]  
+> This is a fork of the original [kysely-codegen](https://github.com/RobinBlomberg/kysely-codegen). It is recommended to try it out first.
+
+This fork of kysely-codegen is the same code but (almost) everything made Deno compatible.  
+I made this to support postgresql on kysely-codegen.
+
+This fork accepts a custom kysely dialect which can be used directly instead of using a built-in dialect.
+
+### Example Usage
+
+```typescript
+  import { pgDialect } from './my-custom-pg-dialect.ts';
+  const cli = new codegen.Cli();
+
+  const dbUri =
+    `postgres://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.dbname}`;
+
+  console.log({ dbUri });
+
+  const outFile = Deno.cwd() + "/db/types.ts";
+  await cli.generate({
+    url: dbUri,
+    outFile,
+    customKyselyDialect: pgDialect,
+    dialectName: "postgres",
+  });
+```
+
+---
+
+Original README:
+
 # ![kysely-codegen](./assets/kysely-codegen-logo.svg) <!-- omit from toc -->
 
 `kysely-codegen` generates Kysely type definitions from your database. That's
