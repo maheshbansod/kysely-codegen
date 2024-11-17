@@ -1,10 +1,10 @@
 import type { Kysely, TableMetadata as KyselyTableMetadata } from 'kysely';
-import { EnumCollection } from '../../enum-collection';
-import type { IntrospectOptions } from '../../introspector';
-import { Introspector } from '../../introspector';
-import { DatabaseMetadata } from '../../metadata/database-metadata';
-import type { MysqlDB } from './mysql-db';
-import { MysqlParser } from './mysql-parser';
+import { EnumCollection } from '../../enum-collection.ts';
+import type { IntrospectOptions } from '../../introspector.ts';
+import { Introspector } from '../../introspector.ts';
+import { DatabaseMetadata } from '../../metadata/database-metadata.ts';
+import type { MysqlDB } from './mysql-db.ts';
+import { MysqlParser } from './mysql-parser.ts';
 
 const ENUM_REGEXP = /^enum\(.*\)$/;
 

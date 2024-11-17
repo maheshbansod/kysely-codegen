@@ -1,6 +1,6 @@
-import { MssqlIntrospectorDialect } from '../../../introspector/dialects/mssql/mssql-dialect';
-import type { GeneratorDialect } from '../../dialect';
-import { MssqlAdapter } from './mssql-adapter';
+import { MssqlIntrospectorDialect } from '../../../introspector/dialects/mssql/mssql-dialect.ts';
+import type { GeneratorDialect } from '../../dialect.ts';
+import { MssqlAdapter } from './mssql-adapter.ts';
 
 const DEFAULT_MSSQL_PORT = 1433;
 

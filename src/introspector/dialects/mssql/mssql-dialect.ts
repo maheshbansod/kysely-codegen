@@ -1,7 +1,7 @@
 import { MssqlDialect as KyselyMssqlDialect } from 'kysely';
-import type { CreateKyselyDialectOptions } from '../../dialect';
-import { IntrospectorDialect } from '../../dialect';
-import { MssqlIntrospector } from './mssql-introspector';
+import type { CreateKyselyDialectOptions } from '../../dialect.ts';
+import { IntrospectorDialect } from '../../dialect.ts';
+import { MssqlIntrospector } from './mssql-introspector.ts';
 
 const DEFAULT_MSSQL_PORT = 1433;
 

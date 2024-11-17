@@ -1,6 +1,6 @@
 import chalk from 'chalk';
-import { inspect } from 'util';
-import { LogLevel } from './log-level';
+import { inspect } from 'node:util';
+import { LogLevel } from './log-level.ts';
 
 /**
  * Provides pretty console logging.

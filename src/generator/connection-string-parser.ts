@@ -1,7 +1,7 @@
 import { config as loadEnv } from 'dotenv';
 import { expand as expandEnv } from 'dotenv-expand';
-import type { DialectName } from './dialect-manager';
-import type { Logger } from './logger/logger';
+import type { DialectName } from './dialect-manager.ts';
+import type { Logger } from './logger/logger.ts';
 
 const CALL_STATEMENT_REGEXP = /^\s*([a-z]+)\s*\(\s*(.*)\s*\)\s*$/;
 const DIALECT_PARTS_REGEXP = /([^:]*)(.*)/;
@@ -93,7 +93,7 @@ export class ConnectionStringParser {
 
       options.logger?.info(`Loaded environment variables from '${envFile}'.`);
 
-      const envConnectionString = process.env[key];
+      const envConnectionString = Deno.env.get(key);
       if (!envConnectionString) {
         throw new ReferenceError(
           `Environment variable '${key}' could not be found.`,

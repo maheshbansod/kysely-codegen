@@ -1,9 +1,9 @@
 import { PostgresDialect as KyselyPostgresDialect } from 'kysely';
-import type { CreateKyselyDialectOptions } from '../../dialect';
-import { IntrospectorDialect } from '../../dialect';
-import { DateParser, DEFAULT_DATE_PARSER } from './date-parser';
-import { DEFAULT_NUMERIC_PARSER, NumericParser } from './numeric-parser';
-import { PostgresIntrospector } from './postgres-introspector';
+import type { CreateKyselyDialectOptions } from '../../dialect.ts';
+import { IntrospectorDialect } from '../../dialect.ts';
+import { DateParser, DEFAULT_DATE_PARSER } from './date-parser.ts';
+import { DEFAULT_NUMERIC_PARSER, NumericParser } from './numeric-parser.ts';
+import { PostgresIntrospector } from './postgres-introspector.ts';
 
 type PostgresDialectOptions = {
   dateParser?: DateParser;

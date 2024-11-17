@@ -1,4 +1,5 @@
-import { matcher } from 'micromatch';
+import micromatch from 'micromatch';
+const matcher = micromatch.matcher;
 
 export class TableMatcher {
   isMatch: (string: string) => boolean;

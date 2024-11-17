@@ -1,13 +1,13 @@
-import type { DateParser } from '../introspector/dialects/postgres/date-parser';
-import type { NumericParser } from '../introspector/dialects/postgres/numeric-parser';
-import type { GeneratorDialect } from './dialect';
-import { KyselyBunSqliteDialect } from './dialects/kysely-bun-sqlite/kysely-bun-sqlite-dialect';
-import { LibsqlDialect } from './dialects/libsql/libsql-dialect';
-import { MssqlDialect } from './dialects/mssql/mssql-dialect';
-import { MysqlDialect } from './dialects/mysql/mysql-dialect';
-import { PostgresDialect } from './dialects/postgres/postgres-dialect';
-import { SqliteDialect } from './dialects/sqlite/sqlite-dialect';
-import { WorkerBunSqliteDialect } from './dialects/worker-bun-sqlite/worker-bun-sqlite-dialect';
+import type { DateParser } from '../introspector/dialects/postgres/date-parser.ts';
+import type { NumericParser } from '../introspector/dialects/postgres/numeric-parser.ts';
+import type { GeneratorDialect } from './dialect.ts';
+import { KyselyBunSqliteDialect } from './dialects/kysely-bun-sqlite/kysely-bun-sqlite-dialect.ts';
+import { LibsqlDialect } from './dialects/libsql/libsql-dialect.ts';
+import { MssqlDialect } from './dialects/mssql/mssql-dialect.ts';
+import { MysqlDialect } from './dialects/mysql/mysql-dialect.ts';
+import { PostgresDialect } from './dialects/postgres/postgres-dialect.ts';
+import { SqliteDialect } from './dialects/sqlite/sqlite-dialect.ts';
+import { WorkerBunSqliteDialect } from './dialects/worker-bun-sqlite/worker-bun-sqlite-dialect.ts';
 
 export type DialectName =
   | 'bun-sqlite'

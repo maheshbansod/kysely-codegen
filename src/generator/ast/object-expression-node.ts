@@ -1,5 +1,5 @@
-import { NodeType } from './node-type';
-import type { PropertyNode } from './property-node';
+import { NodeType } from './node-type.ts';
+import type { PropertyNode } from './property-node.ts';
 
 export class ObjectExpressionNode {
   readonly properties: PropertyNode[];

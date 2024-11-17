@@ -1,8 +1,8 @@
-import assert from 'assert';
+import assert from 'node:assert';
 import { CamelCasePlugin, Kysely, sql } from 'kysely';
-import { IntrospectorDialect } from './dialect';
-import { MysqlIntrospectorDialect } from './dialects/mysql/mysql-dialect';
-import { PostgresIntrospectorDialect } from './dialects/postgres/postgres-dialect';
+import { IntrospectorDialect } from './dialect.ts';
+import { MysqlIntrospectorDialect } from './dialects/mysql/mysql-dialect.ts';
+import { PostgresIntrospectorDialect } from './dialects/postgres/postgres-dialect.ts';
 
 const down = async (db: Kysely<any>, dialect: IntrospectorDialect) => {
   assert(dialect instanceof IntrospectorDialect);

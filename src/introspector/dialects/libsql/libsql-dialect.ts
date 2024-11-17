@@ -1,6 +1,6 @@
-import type { CreateKyselyDialectOptions } from '../../dialect';
-import { IntrospectorDialect } from '../../dialect';
-import { LibsqlIntrospector } from './libsql-introspector';
+import type { CreateKyselyDialectOptions } from '../../dialect.ts';
+import { IntrospectorDialect } from '../../dialect.ts';
+import { LibsqlIntrospector } from './libsql-introspector.ts';
 
 export class LibsqlIntrospectorDialect extends IntrospectorDialect {
   override readonly introspector = new LibsqlIntrospector();

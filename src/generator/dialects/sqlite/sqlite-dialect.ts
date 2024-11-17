@@ -1,6 +1,6 @@
-import { SqliteIntrospectorDialect } from '../../../introspector/dialects/sqlite/sqlite-dialect';
-import type { GeneratorDialect } from '../../dialect';
-import { SqliteAdapter } from './sqlite-adapter';
+import { SqliteIntrospectorDialect } from '../../../introspector/dialects/sqlite/sqlite-dialect.ts';
+import type { GeneratorDialect } from '../../dialect.ts';
+import { SqliteAdapter } from './sqlite-adapter.ts';
 
 export class SqliteDialect
   extends SqliteIntrospectorDialect

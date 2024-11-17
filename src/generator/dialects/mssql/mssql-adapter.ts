@@ -1,5 +1,5 @@
-import { Adapter } from '../../adapter';
-import { IdentifierNode } from '../../ast/identifier-node';
+import { Adapter } from '../../adapter.ts';
+import { IdentifierNode } from '../../ast/identifier-node.ts';
 
 export class MssqlAdapter extends Adapter {
   // https://github.com/tediousjs/tedious/tree/master/src/data-types

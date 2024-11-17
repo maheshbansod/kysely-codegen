@@ -1,5 +1,5 @@
-import type { ExpressionNode } from './expression-node';
-import { NodeType } from './node-type';
+import type { ExpressionNode } from './expression-node.ts';
+import { NodeType } from './node-type.ts';
 
 export class PropertyNode {
   readonly comment: string | null;

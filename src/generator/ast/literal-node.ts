@@ -1,4 +1,4 @@
-import { NodeType } from './node-type';
+import { NodeType } from './node-type.ts';
 
 type Literal = number | string;
 

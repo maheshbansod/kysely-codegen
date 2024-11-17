@@ -1,13 +1,15 @@
-import { promises as fs } from 'fs';
+import { promises as fs } from 'node:fs';
 import type { Kysely } from 'kysely';
-import { parse, relative, sep } from 'path';
-import { performance } from 'perf_hooks';
-import type { GeneratorDialect } from '../dialect';
-import type { Logger } from '../logger/logger';
-import { transform, type Overrides } from '../transformer/transform';
-import { DiffChecker } from './diff-checker';
-import type { RuntimeEnumsStyle } from './runtime-enums-style';
-import { Serializer } from './serializer';
+import { parse, relative, SEPARATOR } from '@std/path';
+import { performance } from 'node:perf_hooks';
+import type { GeneratorDialect } from '../dialect.ts';
+import type { Logger } from '../logger/logger.ts';
+import { transform, type Overrides } from '../transformer/transform.ts';
+import { DiffChecker } from './diff-checker.ts';
+import type { RuntimeEnumsStyle } from './runtime-enums-style.ts';
+import { Serializer } from './serializer.ts';
+
+const sep = SEPARATOR;
 
 export type GenerateOptions = {
   camelCase?: boolean;
@@ -74,7 +76,7 @@ export const generate = async (options: GenerateOptions) => {
   const data = serializer.serializeFile(nodes);
 
   const relativeOutDir = options.outFile
-    ? `.${sep}${relative(process.cwd(), options.outFile)}`
+    ? `.${sep}${relative(Deno.cwd(), options.outFile)}`
     : null;
 
   if (options.print) {

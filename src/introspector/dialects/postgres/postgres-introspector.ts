@@ -4,13 +4,13 @@ import type {
   TableMetadata as KyselyTableMetadata,
 } from 'kysely';
 import { sql } from 'kysely';
-import { EnumCollection } from '../../enum-collection';
-import type { IntrospectOptions } from '../../introspector';
-import { Introspector } from '../../introspector';
-import type { ColumnMetadata } from '../../metadata/column-metadata';
-import { DatabaseMetadata } from '../../metadata/database-metadata';
-import type { TableMetadata } from '../../metadata/table-metadata';
-import type { PostgresDB } from './postgres-db';
+import { EnumCollection } from '../../enum-collection.ts';
+import type { IntrospectOptions } from '../../introspector.ts';
+import { Introspector } from '../../introspector.ts';
+import type { ColumnMetadata } from '../../metadata/column-metadata.ts';
+import { DatabaseMetadata } from '../../metadata/database-metadata.ts';
+import type { TableMetadata } from '../../metadata/table-metadata.ts';
+import type { PostgresDB } from './postgres-db.ts';
 
 type PostgresDomainInspector = {
   rootType: string;

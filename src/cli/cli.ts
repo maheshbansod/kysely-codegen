@@ -1,28 +1,29 @@
+// deno-lint-ignore-file no-explicit-any
 import minimist from 'minimist';
-import { ConnectionStringParser } from '../generator/connection-string-parser';
-import type { DialectName } from '../generator/dialect-manager';
-import { DialectManager } from '../generator/dialect-manager';
-import { generate } from '../generator/generator/generate';
-import { RuntimeEnumsStyle } from '../generator/generator/runtime-enums-style';
-import { LogLevel } from '../generator/logger/log-level';
-import { Logger } from '../generator/logger/logger';
-import type { Overrides } from '../generator/transformer/transform';
+import { ConnectionStringParser } from '../generator/connection-string-parser.ts';
+import type { DialectName } from '../generator/dialect-manager.ts';
+import { DialectManager } from '../generator/dialect-manager.ts';
+import { generate } from '../generator/generator/generate.ts';
+import { RuntimeEnumsStyle } from '../generator/generator/runtime-enums-style.ts';
+import { LogLevel } from '../generator/logger/log-level.ts';
+import { Logger } from '../generator/logger/logger.ts';
+import type { Overrides } from '../generator/transformer/transform.ts';
 import type { Dialect } from 'kysely';
 import {
   DateParser,
   DEFAULT_DATE_PARSER,
-} from '../introspector/dialects/postgres/date-parser';
+} from '../introspector/dialects/postgres/date-parser.ts';
 import {
   DEFAULT_NUMERIC_PARSER,
   NumericParser,
-} from '../introspector/dialects/postgres/numeric-parser';
+} from '../introspector/dialects/postgres/numeric-parser.ts';
 import {
   DEFAULT_LOG_LEVEL,
   DEFAULT_OUT_FILE,
   DEFAULT_URL,
   VALID_DIALECTS,
-} from './constants';
-import { FLAGS, serializeFlags } from './flags';
+} from './constants.ts';
+import { FLAGS, serializeFlags } from './flags.ts';
 
 export type CliOptions = {
   camelCase?: boolean;
@@ -194,7 +195,7 @@ export class Cli {
         '\n',
       ),
     );
-    process.exit(0);
+    Deno.exit(0);
   }
 
   parseOptions(args: string[], options?: { silent?: boolean }): CliOptions {
@@ -302,7 +303,7 @@ export class Cli {
             throw error;
           } else {
             console.error(new Logger().serializeError(error.message));
-            process.exit(0);
+            Deno.exit(0);
           }
         } else {
           throw error;

@@ -1,6 +1,6 @@
-import { deepStrictEqual } from 'assert';
+import { deepStrictEqual } from 'node:assert';
 import { describe, it } from 'vitest';
-import { ConnectionStringParser } from './connection-string-parser';
+import { ConnectionStringParser } from './connection-string-parser.ts';
 
 describe(ConnectionStringParser.name, () => {
   const parser = new ConnectionStringParser();

@@ -1,3 +1,3 @@
-export * from './cli';
-export * from './constants';
-export * from './flags';
+export * from './cli.ts';
+export * from './constants.ts';
+export * from './flags.ts';

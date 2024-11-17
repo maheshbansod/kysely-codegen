@@ -1,6 +1,6 @@
-import { SqliteIntrospectorDialect } from '../../../introspector/dialects/sqlite/sqlite-dialect';
-import type { GeneratorDialect } from '../../dialect';
-import { SqliteAdapter } from '../sqlite/sqlite-adapter';
+import { SqliteIntrospectorDialect } from '../../../introspector/dialects/sqlite/sqlite-dialect.ts';
+import type { GeneratorDialect } from '../../dialect.ts';
+import { SqliteAdapter } from '../sqlite/sqlite-adapter.ts';
 
 export class KyselyBunSqliteDialect
   extends SqliteIntrospectorDialect

@@ -1,4 +1,4 @@
-import { NodeType } from './node-type';
+import { NodeType } from './node-type.ts';
 
 export class IdentifierNode {
   readonly name: string;

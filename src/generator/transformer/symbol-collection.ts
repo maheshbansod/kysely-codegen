@@ -1,13 +1,13 @@
-import type { ExpressionNode } from '../ast/expression-node';
-import type { LiteralNode } from '../ast/literal-node';
-import type { ModuleReferenceNode } from '../ast/module-reference-node';
-import type { RuntimeEnumDeclarationNode } from '../ast/runtime-enum-declaration-node';
-import type { TemplateNode } from '../ast/template-node';
+import type { ExpressionNode } from '../ast/expression-node.ts';
+import type { LiteralNode } from '../ast/literal-node.ts';
+import type { ModuleReferenceNode } from '../ast/module-reference-node.ts';
+import type { RuntimeEnumDeclarationNode } from '../ast/runtime-enum-declaration-node.ts';
+import type { TemplateNode } from '../ast/template-node.ts';
 import {
   toKyselyPascalCase,
   toScreamingSnakeCase,
-} from '../utils/case-converter';
-import { IdentifierStyle } from './identifier-style';
+} from '../utils/case-converter.ts';
+import { IdentifierStyle } from './identifier-style.ts';
 
 export type SymbolEntry = [id: string, symbol: SymbolNode];
 

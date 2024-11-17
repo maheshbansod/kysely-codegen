@@ -1,20 +1,20 @@
-import { deepStrictEqual } from 'assert';
+import { deepStrictEqual } from 'node:assert';
 import { type Kysely } from 'kysely';
 import parsePostgresInterval from 'postgres-interval';
 import { describe, test } from 'vitest';
-import { NumericParser } from '../introspector/dialects/postgres/numeric-parser';
-import { migrate } from '../introspector/introspector.fixtures';
-import type { IntrospectorDialect } from './dialect';
-import { LibsqlIntrospectorDialect } from './dialects/libsql/libsql-dialect';
-import { MysqlIntrospectorDialect } from './dialects/mysql/mysql-dialect';
-import { DateParser } from './dialects/postgres/date-parser';
-import { PostgresIntrospectorDialect } from './dialects/postgres/postgres-dialect';
-import { SqliteIntrospectorDialect } from './dialects/sqlite/sqlite-dialect';
-import { EnumCollection } from './enum-collection';
-import { Introspector } from './introspector';
-import { ColumnMetadata } from './metadata/column-metadata';
-import { DatabaseMetadata } from './metadata/database-metadata';
-import { TableMetadata } from './metadata/table-metadata';
+import { NumericParser } from '../introspector/dialects/postgres/numeric-parser.ts';
+import { migrate } from '../introspector/introspector.fixtures.ts';
+import type { IntrospectorDialect } from './dialect.ts';
+import { LibsqlIntrospectorDialect } from './dialects/libsql/libsql-dialect.ts';
+import { MysqlIntrospectorDialect } from './dialects/mysql/mysql-dialect.ts';
+import { DateParser } from './dialects/postgres/date-parser.ts';
+import { PostgresIntrospectorDialect } from './dialects/postgres/postgres-dialect.ts';
+import { SqliteIntrospectorDialect } from './dialects/sqlite/sqlite-dialect.ts';
+import { EnumCollection } from './enum-collection.ts';
+import { Introspector } from './introspector.ts';
+import { ColumnMetadata } from './metadata/column-metadata.ts';
+import { DatabaseMetadata } from './metadata/database-metadata.ts';
+import { TableMetadata } from './metadata/table-metadata.ts';
 
 type Test = {
   connectionString: string;

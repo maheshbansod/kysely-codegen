@@ -4,7 +4,7 @@ import {
   DEFAULT_URL,
   LOG_LEVEL_NAMES,
   VALID_DIALECTS,
-} from './constants';
+} from './constants.ts';
 
 type Flag = {
   default?: string;

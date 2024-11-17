@@ -1,6 +1,6 @@
-import { strictEqual } from 'assert';
+import { strictEqual } from 'node:assert';
 import { test } from 'vitest';
-import { DiffChecker } from './diff-checker';
+import { DiffChecker } from './diff-checker.ts';
 
 test(DiffChecker.name, () => {
   strictEqual(

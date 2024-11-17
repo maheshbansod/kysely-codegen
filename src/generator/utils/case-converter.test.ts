@@ -5,7 +5,7 @@ import {
   toPascalCase,
   toScreamingSnakeCase,
   toWords,
-} from './case-converter';
+} from './case-converter.ts';
 
 test(toKyselyCamelCase, () => {
   expect(toKyselyCamelCase('checklist_item_1')).toBe('checklistItem1');

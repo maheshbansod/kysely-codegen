@@ -1,6 +1,6 @@
-import { LibsqlIntrospectorDialect } from '../../../introspector/dialects/libsql/libsql-dialect';
-import type { GeneratorDialect } from '../../dialect';
-import { LibsqlAdapter } from './libsql-adapter';
+import { LibsqlIntrospectorDialect } from '../../../introspector/dialects/libsql/libsql-dialect.ts';
+import type { GeneratorDialect } from '../../dialect.ts';
+import { LibsqlAdapter } from './libsql-adapter.ts';
 
 export class LibsqlDialect
   extends LibsqlIntrospectorDialect

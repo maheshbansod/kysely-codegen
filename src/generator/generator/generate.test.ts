@@ -1,23 +1,23 @@
-import { strictEqual } from 'assert';
-import { readFile } from 'fs/promises';
-import { join } from 'path';
+import { strictEqual } from 'node:assert';
+import { readFile } from 'node:fs/promises';
+import { join } from '@std/path';
 import { describe, test } from 'vitest';
-import { DateParser } from '../../introspector/dialects/postgres/date-parser';
-import { NumericParser } from '../../introspector/dialects/postgres/numeric-parser';
+import { DateParser } from '../../introspector/dialects/postgres/date-parser.ts';
+import { NumericParser } from '../../introspector/dialects/postgres/numeric-parser.ts';
 import {
   addExtraColumn,
   migrate,
-} from '../../introspector/introspector.fixtures';
-import { JsonColumnTypeNode } from '../ast/json-column-type-node';
-import { RawExpressionNode } from '../ast/raw-expression-node';
-import type { GeneratorDialect } from '../dialect';
-import { LibsqlDialect } from '../dialects/libsql/libsql-dialect';
-import { MysqlDialect } from '../dialects/mysql/mysql-dialect';
-import { PostgresDialect } from '../dialects/postgres/postgres-dialect';
-import { SqliteDialect } from '../dialects/sqlite/sqlite-dialect';
-import type { GenerateOptions } from './generate';
-import { generate } from './generate';
-import { RuntimeEnumsStyle } from './runtime-enums-style';
+} from '../../introspector/introspector.fixtures.ts';
+import { JsonColumnTypeNode } from '../ast/json-column-type-node.ts';
+import { RawExpressionNode } from '../ast/raw-expression-node.ts';
+import type { GeneratorDialect } from '../dialect.ts';
+import { LibsqlDialect } from '../dialects/libsql/libsql-dialect.ts';
+import { MysqlDialect } from '../dialects/mysql/mysql-dialect.ts';
+import { PostgresDialect } from '../dialects/postgres/postgres-dialect.ts';
+import { SqliteDialect } from '../dialects/sqlite/sqlite-dialect.ts';
+import type { GenerateOptions } from './generate.ts';
+import { generate } from './generate.ts';
+import { RuntimeEnumsStyle } from './runtime-enums-style.ts';
 
 type Test = {
   connectionString: string;

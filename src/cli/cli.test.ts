@@ -1,17 +1,17 @@
-import { deepStrictEqual } from 'assert';
+import { deepStrictEqual } from 'node:assert';
 import { execa } from 'execa';
-import { join } from 'path';
+import { join } from '@std/path';
 import { describe, it } from 'vitest';
-import packageJson from '../../package.json';
-import { LogLevel } from '../generator/logger/log-level';
+import packageJson from '../../package.json' with { type: "json" };
+import { LogLevel } from '../generator/logger/log-level.ts';
 import {
   DateParser,
   DEFAULT_DATE_PARSER,
-} from '../introspector/dialects/postgres/date-parser';
-import { DEFAULT_NUMERIC_PARSER } from '../introspector/dialects/postgres/numeric-parser';
-import type { CliOptions } from './cli';
-import { Cli } from './cli';
-import { DEFAULT_LOG_LEVEL, DEFAULT_OUT_FILE, DEFAULT_URL } from './constants';
+} from '../introspector/dialects/postgres/date-parser.ts';
+import { DEFAULT_NUMERIC_PARSER } from '../introspector/dialects/postgres/numeric-parser.ts';
+import type { CliOptions } from './cli.ts';
+import { Cli } from './cli.ts';
+import { DEFAULT_LOG_LEVEL, DEFAULT_OUT_FILE, DEFAULT_URL } from './constants.ts';
 
 describe(Cli.name, () => {
   const cli = new Cli();
@@ -41,7 +41,7 @@ describe(Cli.name, () => {
 
   it('should be able to start the CLI', async () => {
     await execa`pnpm build`;
-    const binPath = join(process.cwd(), packageJson.bin['kysely-codegen']);
+    const binPath = join(Deno.cwd(), packageJson.bin['kysely-codegen']);
     const output = await execa`node ${binPath} --help`.then((a) => a.stdout);
     deepStrictEqual(output.includes('--help, -h'), true);
   });

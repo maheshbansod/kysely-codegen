@@ -1,16 +1,16 @@
-import { Adapter } from '../../adapter';
-import { ArrayExpressionNode } from '../../ast/array-expression-node';
-import { ColumnTypeNode } from '../../ast/column-type-node';
-import { IdentifierNode } from '../../ast/identifier-node';
-import { ObjectExpressionNode } from '../../ast/object-expression-node';
-import { PropertyNode } from '../../ast/property-node';
-import { UnionExpressionNode } from '../../ast/union-expression-node';
+import { Adapter } from '../../adapter.ts';
+import { ArrayExpressionNode } from '../../ast/array-expression-node.ts';
+import { ColumnTypeNode } from '../../ast/column-type-node.ts';
+import { IdentifierNode } from '../../ast/identifier-node.ts';
+import { ObjectExpressionNode } from '../../ast/object-expression-node.ts';
+import { PropertyNode } from '../../ast/property-node.ts';
+import { UnionExpressionNode } from '../../ast/union-expression-node.ts';
 import {
   JSON_ARRAY_DEFINITION,
   JSON_OBJECT_DEFINITION,
   JSON_PRIMITIVE_DEFINITION,
   JSON_VALUE_DEFINITION,
-} from '../../transformer/definitions';
+} from '../../transformer/definitions.ts';
 
 export class MysqlAdapter extends Adapter {
   override readonly definitions = {

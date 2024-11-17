@@ -1,7 +1,7 @@
 import { Dialect, Kysely, sql } from 'kysely';
-import type { IntrospectorDialect } from './dialect';
-import type { DatabaseMetadata } from './metadata/database-metadata';
-import { TableMatcher } from './table-matcher';
+import type { IntrospectorDialect } from './dialect.ts';
+import type { DatabaseMetadata } from './metadata/database-metadata.ts';
+import { TableMatcher } from './table-matcher.ts';
 
 type ConnectOptions = {
   connectionString: string;

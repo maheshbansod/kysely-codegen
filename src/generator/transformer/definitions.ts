@@ -1,13 +1,13 @@
-import { ArrayExpressionNode } from '../ast/array-expression-node';
-import { ColumnTypeNode } from '../ast/column-type-node';
-import type { DefinitionNode } from '../ast/definition-node';
-import { ExtendsClauseNode } from '../ast/extends-clause-node';
-import { GenericExpressionNode } from '../ast/generic-expression-node';
-import { IdentifierNode } from '../ast/identifier-node';
-import { InferClauseNode } from '../ast/infer-clause-node';
-import { MappedTypeNode } from '../ast/mapped-type-node';
-import { TemplateNode } from '../ast/template-node';
-import { UnionExpressionNode } from '../ast/union-expression-node';
+import { ArrayExpressionNode } from '../ast/array-expression-node.ts';
+import { ColumnTypeNode } from '../ast/column-type-node.ts';
+import type { DefinitionNode } from '../ast/definition-node.ts';
+import { ExtendsClauseNode } from '../ast/extends-clause-node.ts';
+import { GenericExpressionNode } from '../ast/generic-expression-node.ts';
+import { IdentifierNode } from '../ast/identifier-node.ts';
+import { InferClauseNode } from '../ast/infer-clause-node.ts';
+import { MappedTypeNode } from '../ast/mapped-type-node.ts';
+import { TemplateNode } from '../ast/template-node.ts';
+import { UnionExpressionNode } from '../ast/union-expression-node.ts';
 
 export const GLOBAL_DEFINITIONS = {
   /**

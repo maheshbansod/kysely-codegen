@@ -1,8 +1,8 @@
-import type { DateParser } from '../../../introspector/dialects/postgres/date-parser';
-import type { NumericParser } from '../../../introspector/dialects/postgres/numeric-parser';
-import { PostgresIntrospectorDialect } from '../../../introspector/dialects/postgres/postgres-dialect';
-import type { GeneratorDialect } from '../../dialect';
-import { PostgresAdapter } from './postgres-adapter';
+import type { DateParser } from '../../../introspector/dialects/postgres/date-parser.ts';
+import type { NumericParser } from '../../../introspector/dialects/postgres/numeric-parser.ts';
+import { PostgresIntrospectorDialect } from '../../../introspector/dialects/postgres/postgres-dialect.ts';
+import type { GeneratorDialect } from '../../dialect.ts';
+import { PostgresAdapter } from './postgres-adapter.ts';
 
 type PostgresDialectOptions = {
   dateParser?: DateParser;

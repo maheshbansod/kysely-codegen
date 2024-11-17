@@ -1,8 +1,8 @@
-import { deepStrictEqual } from 'assert';
+import { deepStrictEqual } from 'node:assert';
 import { test } from 'vitest';
-import { IdentifierNode } from '../ast/identifier-node';
-import type { SymbolNode } from './symbol-collection';
-import { SymbolCollection, SymbolType } from './symbol-collection';
+import { IdentifierNode } from '../ast/identifier-node.ts';
+import type { SymbolNode } from './symbol-collection.ts';
+import { SymbolCollection, SymbolType } from './symbol-collection.ts';
 
 test(SymbolCollection.name, () => {
   const symbols = new SymbolCollection();

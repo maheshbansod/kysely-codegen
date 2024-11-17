@@ -1,6 +1,6 @@
-import { EnumCollection } from '../enum-collection';
-import type { TableMetadataOptions } from './table-metadata';
-import { TableMetadata } from './table-metadata';
+import { EnumCollection } from '../enum-collection.ts';
+import type { TableMetadataOptions } from './table-metadata.ts';
+import { TableMetadata } from './table-metadata.ts';
 
 export class DatabaseMetadata {
   readonly enums: EnumCollection;

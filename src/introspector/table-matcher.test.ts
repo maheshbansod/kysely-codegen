@@ -1,6 +1,6 @@
-import { strictEqual } from 'assert';
+import { strictEqual } from 'node:assert';
 import { describe, it } from 'vitest';
-import { TableMatcher } from './table-matcher';
+import { TableMatcher } from './table-matcher.ts';
 
 describe(TableMatcher.name, () => {
   it('should match tables without schemas', () => {

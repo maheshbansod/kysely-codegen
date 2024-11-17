@@ -1,4 +1,4 @@
-import { NodeType } from './node-type';
+import { NodeType } from './node-type.ts';
 
 export class RawExpressionNode {
   readonly expression: string;
