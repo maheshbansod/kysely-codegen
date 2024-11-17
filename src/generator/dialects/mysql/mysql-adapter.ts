@@ -1,6 +1,7 @@
 import { Adapter } from "../../adapter.ts";
 import { ArrayExpressionNode } from "../../ast/array-expression-node.ts";
 import { ColumnTypeNode } from "../../ast/column-type-node.ts";
+import type { DefinitionNode } from "../../ast/definition-node.ts";
 import { IdentifierNode } from "../../ast/identifier-node.ts";
 import { ObjectExpressionNode } from "../../ast/object-expression-node.ts";
 import { PropertyNode } from "../../ast/property-node.ts";
@@ -13,7 +14,18 @@ import {
 } from "../../transformer/definitions.ts";
 
 export class MysqlAdapter extends Adapter {
-  override readonly definitions = {
+  override readonly definitions: {
+    Decimal: ColumnTypeNode,
+    Geometry: UnionExpressionNode,
+    Json: ColumnTypeNode,
+    JsonArray: DefinitionNode,
+    JsonObject: DefinitionNode,
+    JsonPrimitive: DefinitionNode,
+    JsonValue: DefinitionNode,
+    LineString: DefinitionNode,
+    Point: ObjectExpressionNode,
+    Polygon: ArrayExpressionNode,
+  } = {
     Decimal: new ColumnTypeNode(
       new IdentifierNode("string"),
       new UnionExpressionNode([
@@ -44,7 +56,44 @@ export class MysqlAdapter extends Adapter {
     Polygon: new ArrayExpressionNode(new IdentifierNode("LineString")),
   };
   // These types have been found through experimentation in Adminer.
-  override readonly scalars = {
+  override readonly scalars: {
+    bigint:IdentifierNode,
+    binary:IdentifierNode,
+    bit:IdentifierNode,
+    blob:IdentifierNode,
+    char:IdentifierNode,
+    date:IdentifierNode,
+    datetime:IdentifierNode,
+    decimal:IdentifierNode,
+    double:IdentifierNode,
+    float:IdentifierNode,
+    geomcollection:ArrayExpressionNode,
+    geometry:IdentifierNode,
+    int:IdentifierNode,
+    json:IdentifierNode,
+    linestring:IdentifierNode,
+    longblob:IdentifierNode,
+    longtext:IdentifierNode,
+    mediumblob:IdentifierNode,
+    mediumint:IdentifierNode,
+    mediumtext:IdentifierNode,
+    multilinestring:ArrayExpressionNode,
+    multipoint:ArrayExpressionNode,
+    multipolygon:ArrayExpressionNode,
+    point:IdentifierNode,
+    polygon:IdentifierNode,
+    set:IdentifierNode,
+    smallint:IdentifierNode,
+    text:IdentifierNode,
+    time:IdentifierNode,
+    timestamp:IdentifierNode,
+    tinyblob:IdentifierNode,
+    tinyint:IdentifierNode,
+    tinytext:IdentifierNode,
+    varbinary:IdentifierNode,
+    varchar:IdentifierNode,
+    year:IdentifierNode,
+  } = {
     bigint: new IdentifierNode("number"),
     binary: new IdentifierNode("Buffer"),
     bit: new IdentifierNode("Buffer"),

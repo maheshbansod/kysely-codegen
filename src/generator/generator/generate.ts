@@ -34,7 +34,7 @@ export type GenerateOptions = {
 /**
  * Generates codegen output using specified options.
  */
-export const generate = async (options: GenerateOptions) => {
+export const generate = async (options: GenerateOptions): Promise<string> => {
   const startTime = performance.now();
 
   options.logger?.info("Introspecting database...");

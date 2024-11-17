@@ -12,7 +12,7 @@ export class Logger {
     this.logLevel = logLevel;
   }
 
-  #inspect(values: unknown[]) {
+  #inspect(values: unknown[]): string {
     return values
       .map((value) => {
         return value instanceof Object
@@ -22,47 +22,47 @@ export class Logger {
       .join(" ");
   }
 
-  debug(...values: unknown[]) {
+  debug(...values: unknown[]): void {
     if (this.logLevel >= LogLevel.DEBUG) {
       console.debug(...values.map((value) => this.serializeDebug(value)));
     }
   }
 
-  error(...values: unknown[]) {
+  error(...values: unknown[]): void {
     if (this.logLevel >= LogLevel.ERROR) {
       console.error(...values.map((value) => this.serializeError(value)));
     }
   }
 
-  info(...values: unknown[]) {
+  info(...values: unknown[]): void {
     if (this.logLevel >= LogLevel.INFO) {
       console.info(...values.map((value) => this.serializeInfo(value)));
     }
   }
 
-  log(...values: unknown[]) {
+  log(...values: unknown[]): void {
     if (this.logLevel >= LogLevel.INFO) {
       console.log(...values);
     }
   }
 
-  serializeDebug(...values: unknown[]) {
+  serializeDebug(...values: unknown[]): string {
     return chalk.gray(`  ${this.#inspect(values)}`);
   }
 
-  serializeError(...values: unknown[]) {
+  serializeError(...values: unknown[]): string {
     return chalk.red(`✗ ${this.#inspect(values)}`);
   }
 
-  serializeInfo(...values: unknown[]) {
+  serializeInfo(...values: unknown[]): string {
     return chalk.blue(`• ${this.#inspect(values)}`);
   }
 
-  serializeSuccess(...values: unknown[]) {
+  serializeSuccess(...values: unknown[]): string {
     return chalk.green(`✓ ${this.#inspect(values)}`);
   }
 
-  serializeWarn(...values: unknown[]) {
+  serializeWarn(...values: unknown[]): string {
     return chalk.yellow(`⚠ ${this.#inspect(values)}`);
   }
 

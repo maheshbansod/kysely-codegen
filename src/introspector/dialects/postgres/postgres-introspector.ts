@@ -183,7 +183,7 @@ export class PostgresIntrospector extends Introspector<PostgresDB> {
     return result.rows;
   }
 
-  async introspect(options: IntrospectOptions<PostgresDB>) {
+  async introspect(options: IntrospectOptions<PostgresDB>): Promise<DatabaseMetadata> {
     const tables = await this.getTables(options);
 
     const [domains, enums, partitions] = await Promise.all([

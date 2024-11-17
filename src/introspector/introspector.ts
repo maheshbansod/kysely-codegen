@@ -1,4 +1,4 @@
-import { Dialect, Kysely, sql } from "kysely";
+import { type Dialect, type TableMetadata, Kysely, sql } from "kysely";
 import type { IntrospectorDialect } from "./dialect.ts";
 import type { DatabaseMetadata } from "./metadata/database-metadata.ts";
 import { TableMatcher } from "./table-matcher.ts";
@@ -24,7 +24,7 @@ export abstract class Introspector<DB> {
     return await sql`SELECT 1;`.execute(db);
   }
 
-  async connect(options: ConnectOptions) {
+  async connect(options: ConnectOptions): Promise<Kysely<DB>> {
     // Insane solution in lieu of a better one.
     // We'll create a database connection with SSL, and if it complains about SSL, try without it.
     for (const ssl of [true, false]) {
@@ -54,7 +54,7 @@ export abstract class Introspector<DB> {
     throw new Error("Failed to connect to database.");
   }
 
-  protected async getTables(options: IntrospectOptions<DB>) {
+  protected async getTables(options: IntrospectOptions<DB>): Promise<TableMetadata[]> {
     let tables = await options.db.introspection.getTables();
 
     if (options.includePattern) {

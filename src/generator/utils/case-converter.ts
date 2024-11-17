@@ -20,7 +20,7 @@ const toUpperFirst = (string: string): string => {
  * toKyselyCamelCase('foo_bar')
  * // => 'fooBar'
  */
-export const toKyselyCamelCase = (string: string) => {
+export const toKyselyCamelCase = (string: string): string => {
   return new CaseConverter().toCamelCase(string);
 };
 
@@ -29,7 +29,7 @@ export const toKyselyCamelCase = (string: string) => {
  * toKyselyPascalCase('foo_bar')
  * // => 'FooBar'
  */
-export const toKyselyPascalCase = (string: string) => {
+export const toKyselyPascalCase = (string: string): string => {
   return toUpperFirst(toKyselyCamelCase(string));
 };
 
@@ -38,7 +38,7 @@ export const toKyselyPascalCase = (string: string) => {
  * toPascalCase('foo_bar')
  * // => 'FooBar'
  */
-export const toPascalCase = (string: string) => {
+export const toPascalCase = (string: string): string => {
   return toWords(string)
     .map((w) => toUpperFirst(w.toLowerCase()))
     .join("");
@@ -49,7 +49,7 @@ export const toPascalCase = (string: string) => {
  * pascalCase('foo_bar')
  * // => 'FOO_BAR'
  */
-export const toScreamingSnakeCase = (string: string) => {
+export const toScreamingSnakeCase = (string: string): string => {
   return toWords(string)
     .map((w, i) => `${i ? "_" : ""}${w.toUpperCase()}`)
     .join("");
@@ -60,7 +60,7 @@ export const toScreamingSnakeCase = (string: string) => {
  * toWords('FooBar')
  * // => ['Foo', 'Bar']
  */
-export const toWords = (string: string) => {
+export const toWords = (string: string): string[] => {
   return (
     string.match(/(?:\p{Lu}(?!\p{Ll}))+|\p{L}\p{Ll}*|\d+/gu)?.slice() ?? []
   );

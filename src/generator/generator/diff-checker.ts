@@ -6,7 +6,7 @@ export class DiffChecker {
     return `${string.trim()}\n`;
   }
 
-  diff(oldTypes: string, newTypes: string) {
+  diff(oldTypes: string, newTypes: string): string | undefined {
     return gitDiff(this.#sanitize(oldTypes), this.#sanitize(newTypes));
   }
 }

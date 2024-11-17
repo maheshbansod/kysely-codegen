@@ -53,7 +53,7 @@ export class SymbolCollection {
     }
   }
 
-  entries() {
+  entries(): { id: string; name: string; symbol: SymbolNode; }[] {
     return Object.entries(this.symbols)
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([id, symbol]) => ({
@@ -63,19 +63,19 @@ export class SymbolCollection {
       }));
   }
 
-  get(id: string) {
+  get(id: string): SymbolNode | undefined {
     return this.symbols[id];
   }
 
-  getName(id: string) {
+  getName(id: string): string | undefined {
     return this.symbolNames[id];
   }
 
-  has(id: string) {
+  has(id: string): boolean {
     return this.symbols[id] !== undefined;
   }
 
-  set(id: string, symbol: SymbolNode) {
+  set(id: string, symbol: SymbolNode): string {
     let symbolName = this.symbolNames[id];
 
     if (symbolName) {

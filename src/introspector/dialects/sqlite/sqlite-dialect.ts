@@ -6,7 +6,7 @@ import { SqliteIntrospector } from "./sqlite-introspector.ts";
 export class SqliteIntrospectorDialect extends IntrospectorDialect {
   override readonly introspector: SqliteIntrospector = new SqliteIntrospector();
 
-  async createKyselyDialect(options: CreateKyselyDialectOptions) {
+  async createKyselyDialect(options: CreateKyselyDialectOptions): Promise<KyselySqliteDialect> {
     const { default: Database } = await import("better-sqlite3");
 
     return new KyselySqliteDialect({

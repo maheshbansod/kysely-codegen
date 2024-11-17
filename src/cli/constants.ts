@@ -2,7 +2,7 @@ import { join } from "@std/path";
 import { RuntimeEnumsStyle } from "../generator/generator/runtime-enums-style.ts";
 import { LogLevel } from "../generator/logger/log-level.ts";
 
-export const DEFAULT_OUT_FILE = join(
+export const DEFAULT_OUT_FILE: string = join(
   Deno.cwd(),
   "node_modules",
   "kysely-codegen",

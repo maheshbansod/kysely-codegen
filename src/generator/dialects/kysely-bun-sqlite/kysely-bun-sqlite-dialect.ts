@@ -4,5 +4,5 @@ import { SqliteAdapter } from "../sqlite/sqlite-adapter.ts";
 
 export class KyselyBunSqliteDialect extends SqliteIntrospectorDialect
   implements GeneratorDialect {
-  readonly adapter = new SqliteAdapter();
+  readonly adapter: SqliteAdapter = new SqliteAdapter();
 }

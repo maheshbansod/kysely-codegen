@@ -48,7 +48,7 @@ export class Serializer {
     this.typeOnlyImports = options.typeOnlyImports ?? true;
   }
 
-  serializeAliasDeclaration(node: AliasDeclarationNode) {
+  serializeAliasDeclaration(node: AliasDeclarationNode): string {
     const expression = node.body.type === NodeType.TEMPLATE
       ? node.body.expression
       : node.body;
@@ -99,7 +99,7 @@ export class Serializer {
     return data;
   }
 
-  serializeExportStatement(node: ExportStatementNode) {
+  serializeExportStatement(node: ExportStatementNode): string {
     let data = "";
 
     data += "export ";
@@ -144,7 +144,7 @@ export class Serializer {
     }
   }
 
-  serializeExtendsClause(node: ExtendsClauseNode) {
+  serializeExtendsClause(node: ExtendsClauseNode): string {
     let data = "";
 
     data += this.serializeExpression(node.checkType);
@@ -239,7 +239,7 @@ export class Serializer {
     return data;
   }
 
-  serializeInferClause(node: InferClauseNode) {
+  serializeInferClause(node: InferClauseNode): string {
     let data = "";
 
     data += "infer ";
@@ -259,15 +259,15 @@ export class Serializer {
     return data;
   }
 
-  serializeLiteral(node: LiteralNode) {
+  serializeLiteral(node: LiteralNode): string {
     return JSON.stringify(node.value);
   }
 
-  serializeKey(key: string) {
+  serializeKey(key: string): string {
     return IDENTIFIER_REGEXP.test(key) ? key : JSON.stringify(key);
   }
 
-  serializeMappedType(node: MappedTypeNode) {
+  serializeMappedType(node: MappedTypeNode): string {
     let data = "";
 
     data += "{\n  [x: string]: ";
@@ -277,7 +277,7 @@ export class Serializer {
     return data;
   }
 
-  serializeObjectExpression(node: ObjectExpressionNode) {
+  serializeObjectExpression(node: ObjectExpressionNode): string {
     let data = "";
 
     data += "{";
@@ -300,7 +300,7 @@ export class Serializer {
     return data;
   }
 
-  serializeProperty(node: PropertyNode) {
+  serializeProperty(node: PropertyNode): string {
     let data = "";
 
     if (node.comment) {
@@ -321,11 +321,11 @@ export class Serializer {
     return data;
   }
 
-  serializeRawExpression(node: RawExpressionNode) {
+  serializeRawExpression(node: RawExpressionNode): string {
     return node.expression;
   }
 
-  serializeRuntimeEnum(node: RuntimeEnumDeclarationNode) {
+  serializeRuntimeEnum(node: RuntimeEnumDeclarationNode): string {
     let data = "enum ";
 
     data += node.name;
@@ -355,7 +355,7 @@ export class Serializer {
     return data;
   }
 
-  serializeStatements(nodes: StatementNode[]) {
+  serializeStatements(nodes: StatementNode[]): string {
     let data = "";
     let i = 0;
 

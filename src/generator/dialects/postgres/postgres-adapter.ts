@@ -2,6 +2,7 @@ import { DateParser } from "../../../introspector/dialects/postgres/date-parser.
 import { NumericParser } from "../../../introspector/dialects/postgres/numeric-parser.ts";
 import { Adapter } from "../../adapter.ts";
 import { ColumnTypeNode } from "../../ast/column-type-node.ts";
+import type { DefinitionNode } from "../../ast/definition-node.ts";
 import { IdentifierNode } from "../../ast/identifier-node.ts";
 import { ModuleReferenceNode } from "../../ast/module-reference-node.ts";
 import { ObjectExpressionNode } from "../../ast/object-expression-node.ts";
@@ -26,9 +27,23 @@ export class PostgresAdapter extends Adapter {
   // registered type parser for the database type. Furthermore, you can send any type to the
   // PostgreSQL server as a string and node-postgres will pass it through without modifying it in
   // any way."
-  override readonly defaultScalar = new IdentifierNode("string");
+  override readonly defaultScalar: IdentifierNode = new IdentifierNode(
+    "string",
+  );
   override readonly defaultSchemas = ["public"];
-  override readonly definitions = {
+  override readonly definitions: {
+    Circle: ObjectExpressionNode,
+    Int8: ColumnTypeNode,
+    Interval: ColumnTypeNode,
+    Json: DefinitionNode,
+    JsonArray: DefinitionNode,
+    JsonObject: DefinitionNode,
+    JsonPrimitive: DefinitionNode,
+    JsonValue: DefinitionNode,
+    Numeric: ColumnTypeNode,
+    Point: ObjectExpressionNode,
+    Timestamp: ColumnTypeNode,
+  } = {
     Circle: new ObjectExpressionNode([
       new PropertyNode("x", new IdentifierNode("number")),
       new PropertyNode("y", new IdentifierNode("number")),
@@ -92,11 +107,52 @@ export class PostgresAdapter extends Adapter {
       ]),
     ),
   };
-  override readonly imports = {
+  override readonly imports: {
+    IPostgresInterval: ModuleReferenceNode;
+}
+ = {
     IPostgresInterval: new ModuleReferenceNode("postgres-interval"),
   };
   // These types have been found through experimentation in Adminer and in the 'pg' source code.
-  override readonly scalars = {
+  override readonly scalars: {
+    bit: IdentifierNode;
+    bool: IdentifierNode;
+    box: IdentifierNode;
+    bpchar: IdentifierNode;
+    bytea: IdentifierNode;
+    cidr: IdentifierNode;
+    circle: IdentifierNode;
+    date: IdentifierNode;
+    float4: IdentifierNode;
+    float8: IdentifierNode;
+    inet: IdentifierNode;
+    int2: IdentifierNode;
+    int4: IdentifierNode;
+    int8: IdentifierNode;
+    interval: IdentifierNode;
+    json: IdentifierNode;
+    jsonb: IdentifierNode;
+    line: IdentifierNode;
+    lseg: IdentifierNode;
+    macaddr: IdentifierNode;
+    money: IdentifierNode;
+    numeric: IdentifierNode;
+    oid: IdentifierNode;
+    path: IdentifierNode;
+    point: IdentifierNode;
+    polygon: IdentifierNode;
+    text: IdentifierNode;
+    time: IdentifierNode;
+    timestamp: IdentifierNode;
+    timestamptz: IdentifierNode;
+    tsquery: IdentifierNode;
+    tsvector: IdentifierNode;
+    txid_snapshot: IdentifierNode;
+    uuid: IdentifierNode;
+    varbit: IdentifierNode;
+    varchar: IdentifierNode;
+    xml: IdentifierNode;
+  } = {
     bit: new IdentifierNode("string"),
     bool: new IdentifierNode("boolean"), // Specified as "boolean" in Adminer.
     box: new IdentifierNode("string"),

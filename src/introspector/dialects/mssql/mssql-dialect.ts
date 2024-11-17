@@ -41,7 +41,7 @@ export class MssqlIntrospectorDialect extends IntrospectorDialect {
     };
   }
 
-  async createKyselyDialect(options: CreateKyselyDialectOptions) {
+  async createKyselyDialect(options: CreateKyselyDialectOptions): Promise<KyselyMssqlDialect> {
     const tarn = await import("tarn");
     const tedious = await import("tedious");
 

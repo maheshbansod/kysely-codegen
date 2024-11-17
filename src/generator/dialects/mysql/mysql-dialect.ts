@@ -4,5 +4,5 @@ import { MysqlAdapter } from "./mysql-adapter.ts";
 
 export class MysqlDialect extends MysqlIntrospectorDialect
   implements GeneratorDialect {
-  readonly adapter = new MysqlAdapter();
+  readonly adapter: MysqlAdapter = new MysqlAdapter();
 }

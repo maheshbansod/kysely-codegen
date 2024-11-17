@@ -4,5 +4,5 @@ import { LibsqlAdapter } from "./libsql-adapter.ts";
 
 export class LibsqlDialect extends LibsqlIntrospectorDialect
   implements GeneratorDialect {
-  readonly adapter = new LibsqlAdapter();
+  readonly adapter: LibsqlAdapter = new LibsqlAdapter();
 }

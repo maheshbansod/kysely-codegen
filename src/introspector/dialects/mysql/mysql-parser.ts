@@ -58,7 +58,7 @@ export class MysqlParser {
     return value;
   }
 
-  parseEnum() {
+  parseEnum(): string[] {
     this.#consume("e");
     this.#consume("n");
     this.#consume("u");

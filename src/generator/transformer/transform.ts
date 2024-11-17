@@ -428,7 +428,7 @@ const unionize = (args: ExpressionNode[]) => {
   }
 };
 
-export const transform = (options: TransformOptions) => {
+export const transform = (options: TransformOptions): (ExportStatementNode | ImportStatementNode)[] => {
   const context = createContext(options);
   const tableNodes = transformTables(context);
   const importNodes = createImportNodes(context);

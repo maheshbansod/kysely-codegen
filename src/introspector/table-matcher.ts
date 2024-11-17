@@ -10,7 +10,7 @@ export class TableMatcher {
     this.isSimpleGlob = !pattern.includes(".");
   }
 
-  match(schema: string | undefined, name: string) {
+  match(schema: string | undefined, name: string): boolean {
     const string = this.isSimpleGlob ? name : `${schema ?? "*"}.${name}`;
     return this.isMatch(string);
   }

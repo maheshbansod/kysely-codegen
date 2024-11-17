@@ -33,7 +33,7 @@ export class PostgresIntrospectorDialect extends IntrospectorDialect {
     };
   }
 
-  async createKyselyDialect(options: CreateKyselyDialectOptions) {
+  async createKyselyDialect(options: CreateKyselyDialectOptions): Promise<KyselyPostgresDialect> {
     const { default: pg } = await import("pg");
 
     if (this.options.dateParser === DateParser.STRING) {

@@ -5,7 +5,8 @@ import { LibsqlIntrospector } from "./libsql-introspector.ts";
 export class LibsqlIntrospectorDialect extends IntrospectorDialect {
   override readonly introspector: LibsqlIntrospector = new LibsqlIntrospector();
 
-  async createKyselyDialect(options: CreateKyselyDialectOptions) {
+  // ANY USED HERE - SHOULD BE FIXED IDEALL fcas
+  async createKyselyDialect(options: CreateKyselyDialectOptions): Promise<any> {
     const { LibsqlDialect: KyselyLibsqlDialect } = await import(
       "@libsql/kysely-libsql"
     );

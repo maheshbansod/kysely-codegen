@@ -9,7 +9,11 @@ import { MappedTypeNode } from "../ast/mapped-type-node.ts";
 import { TemplateNode } from "../ast/template-node.ts";
 import { UnionExpressionNode } from "../ast/union-expression-node.ts";
 
-export const GLOBAL_DEFINITIONS = {
+export const GLOBAL_DEFINITIONS: {
+  ArrayType: TemplateNode;
+  ArrayTypeImpl: TemplateNode;
+  Generated: TemplateNode;
+} = {
   /**
    * @see https://github.com/RobinBlomberg/kysely-codegen/issues/135
    */

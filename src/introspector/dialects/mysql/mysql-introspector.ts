@@ -49,7 +49,7 @@ export class MysqlIntrospector extends Introspector<MysqlDB> {
     return enums;
   }
 
-  async introspect(options: IntrospectOptions<MysqlDB>) {
+  async introspect(options: IntrospectOptions<MysqlDB>): Promise<DatabaseMetadata> {
     const tables = await this.getTables(options);
     const enums = await this.#introspectEnums(options.db);
     return this.#createDatabaseMetadata({ enums, tables });
