@@ -11,6 +11,7 @@ This fork accepts a custom kysely dialect which can be used directly instead of 
 ### Example Usage
 
 ```typescript
+  import * as codegen from 'kysely-codegen';
   import { pgDialect } from './my-custom-pg-dialect.ts';
   const cli = new codegen.Cli();
 
