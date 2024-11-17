@@ -55,7 +55,7 @@ export class MssqlIntrospectorDialect extends IntrospectorDialect {
       },
       tedious: {
         ...tedious,
-        connectionFactory: () => {
+        connectionFactory: (() => {
           return new tedious.Connection({
             authentication: {
               options: { password, userName },
@@ -70,8 +70,8 @@ export class MssqlIntrospectorDialect extends IntrospectorDialect {
             },
             server,
           });
-        },
-      },
+        }) as unknown as ConstructorParameters<typeof KyselyMssqlDialect>[0]["tedious"]["connectionFactory"],
+      } as unknown as ConstructorParameters<typeof KyselyMssqlDialect>[0]["tedious"],
     });
   }
 }
