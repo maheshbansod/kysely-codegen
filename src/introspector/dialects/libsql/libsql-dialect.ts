@@ -1,13 +1,13 @@
-import type { CreateKyselyDialectOptions } from '../../dialect.ts';
-import { IntrospectorDialect } from '../../dialect.ts';
-import { LibsqlIntrospector } from './libsql-introspector.ts';
+import type { CreateKyselyDialectOptions } from "../../dialect.ts";
+import { IntrospectorDialect } from "../../dialect.ts";
+import { LibsqlIntrospector } from "./libsql-introspector.ts";
 
 export class LibsqlIntrospectorDialect extends IntrospectorDialect {
-  override readonly introspector = new LibsqlIntrospector();
+  override readonly introspector: LibsqlIntrospector = new LibsqlIntrospector();
 
   async createKyselyDialect(options: CreateKyselyDialectOptions) {
     const { LibsqlDialect: KyselyLibsqlDialect } = await import(
-      '@libsql/kysely-libsql'
+      "@libsql/kysely-libsql"
     );
 
     // LibSQL URLs are of the form `libsql://token@host:port/db`:
@@ -18,7 +18,7 @@ export class LibsqlIntrospectorDialect extends IntrospectorDialect {
       const token = url.username;
 
       // Remove the token from the url to get a "normal" connection string:
-      url.username = '';
+      url.username = "";
 
       return new KyselyLibsqlDialect({ authToken: token, url: url.toString() });
     }

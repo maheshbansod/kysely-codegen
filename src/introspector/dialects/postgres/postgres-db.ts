@@ -1,5 +1,5 @@
 export type PostgresDB = {
-  'pg_catalog.pg_namespace': {
+  "pg_catalog.pg_namespace": {
     nspname: string;
     oid: number;
   };

@@ -1,9 +1,9 @@
-import { PostgresDialect as KyselyPostgresDialect } from 'kysely';
-import type { CreateKyselyDialectOptions } from '../../dialect.ts';
-import { IntrospectorDialect } from '../../dialect.ts';
-import { DateParser, DEFAULT_DATE_PARSER } from './date-parser.ts';
-import { DEFAULT_NUMERIC_PARSER, NumericParser } from './numeric-parser.ts';
-import { PostgresIntrospector } from './postgres-introspector.ts';
+import { PostgresDialect as KyselyPostgresDialect } from "kysely";
+import type { CreateKyselyDialectOptions } from "../../dialect.ts";
+import { IntrospectorDialect } from "../../dialect.ts";
+import { DateParser, DEFAULT_DATE_PARSER } from "./date-parser.ts";
+import { DEFAULT_NUMERIC_PARSER, NumericParser } from "./numeric-parser.ts";
+import { PostgresIntrospector } from "./postgres-introspector.ts";
 
 type PostgresDialectOptions = {
   dateParser?: DateParser;
@@ -34,7 +34,7 @@ export class PostgresIntrospectorDialect extends IntrospectorDialect {
   }
 
   async createKyselyDialect(options: CreateKyselyDialectOptions) {
-    const { default: pg } = await import('pg');
+    const { default: pg } = await import("pg");
 
     if (this.options.dateParser === DateParser.STRING) {
       pg.types.setTypeParser(1082, (date) => date);
@@ -46,7 +46,7 @@ export class PostgresIntrospectorDialect extends IntrospectorDialect {
       pg.types.setTypeParser(1700, (value) => {
         const number = Number(value);
         return number > Number.MAX_SAFE_INTEGER ||
-          number < Number.MIN_SAFE_INTEGER
+            number < Number.MIN_SAFE_INTEGER
           ? value
           : number;
       });

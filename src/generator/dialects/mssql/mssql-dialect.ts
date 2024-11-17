@@ -1,13 +1,11 @@
-import { MssqlIntrospectorDialect } from '../../../introspector/dialects/mssql/mssql-dialect.ts';
-import type { GeneratorDialect } from '../../dialect.ts';
-import { MssqlAdapter } from './mssql-adapter.ts';
+import { MssqlIntrospectorDialect } from "../../../introspector/dialects/mssql/mssql-dialect.ts";
+import type { GeneratorDialect } from "../../dialect.ts";
+import { MssqlAdapter } from "./mssql-adapter.ts";
 
 const DEFAULT_MSSQL_PORT = 1433;
 
-export class MssqlDialect
-  extends MssqlIntrospectorDialect
-  implements GeneratorDialect
-{
+export class MssqlDialect extends MssqlIntrospectorDialect
+  implements GeneratorDialect {
   readonly adapter = new MssqlAdapter();
 
   /**
@@ -15,14 +13,14 @@ export class MssqlDialect
    */
   async #parseConnectionString(connectionString: string) {
     const { parseConnectionString } = await import(
-      '@tediousjs/connection-string'
+      "@tediousjs/connection-string"
     );
 
     const parsed = parseConnectionString(connectionString) as Record<
       string,
       string
     >;
-    const tokens = parsed.server!.split(',');
+    const tokens = parsed.server!.split(",");
     const server = tokens[0]!;
     const port = tokens[1]
       ? Number.parseInt(tokens[1], 10)
@@ -33,7 +31,7 @@ export class MssqlDialect
       password: parsed.password!,
       port,
       server,
-      userName: parsed['user id']!,
+      userName: parsed["user id"]!,
     };
   }
 }

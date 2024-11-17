@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { Cli } from './cli.ts';
+import { Cli } from "./cli.ts";
 
 const args = Deno.args.slice(2);
 

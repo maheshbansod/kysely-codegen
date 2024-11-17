@@ -1,7 +1,7 @@
-import { EnumCollection } from '../../enum-collection.ts';
-import type { IntrospectOptions } from '../../introspector.ts';
-import { Introspector } from '../../introspector.ts';
-import { DatabaseMetadata } from '../../metadata/database-metadata.ts';
+import { EnumCollection } from "../../enum-collection.ts";
+import type { IntrospectOptions } from "../../introspector.ts";
+import { Introspector } from "../../introspector.ts";
+import { DatabaseMetadata } from "../../metadata/database-metadata.ts";
 
 export class SqliteIntrospector extends Introspector<any> {
   async introspect(options: IntrospectOptions<any>) {

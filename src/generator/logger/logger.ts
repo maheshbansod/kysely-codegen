@@ -1,6 +1,6 @@
-import chalk from 'chalk';
-import { inspect } from 'node:util';
-import { LogLevel } from './log-level.ts';
+import chalk from "chalk";
+import { inspect } from "node:util";
+import { LogLevel } from "./log-level.ts";
 
 /**
  * Provides pretty console logging.
@@ -19,7 +19,7 @@ export class Logger {
           ? inspect(value, { colors: true })
           : value;
       })
-      .join(' ');
+      .join(" ");
   }
 
   debug(...values: unknown[]) {

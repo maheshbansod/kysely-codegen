@@ -1,33 +1,33 @@
-import type { EnumCollection } from '../../introspector/enum-collection.ts';
-import type { ColumnMetadata } from '../../introspector/metadata/column-metadata.ts';
-import type { DatabaseMetadata } from '../../introspector/metadata/database-metadata.ts';
-import type { TableMetadata } from '../../introspector/metadata/table-metadata.ts';
-import type { Definitions, Imports, Scalars } from '../adapter.ts';
-import { AliasDeclarationNode } from '../ast/alias-declaration-node.ts';
-import { ArrayExpressionNode } from '../ast/array-expression-node.ts';
-import { ExportStatementNode } from '../ast/export-statement-node.ts';
-import type { ExpressionNode } from '../ast/expression-node.ts';
-import { GenericExpressionNode } from '../ast/generic-expression-node.ts';
-import { IdentifierNode } from '../ast/identifier-node.ts';
-import { ImportClauseNode } from '../ast/import-clause-node.ts';
-import { ImportStatementNode } from '../ast/import-statement-node.ts';
-import { InterfaceDeclarationNode } from '../ast/interface-declaration-node.ts';
-import { LiteralNode } from '../ast/literal-node.ts';
-import { NodeType } from '../ast/node-type.ts';
-import { ObjectExpressionNode } from '../ast/object-expression-node.ts';
-import { PropertyNode } from '../ast/property-node.ts';
-import { RawExpressionNode } from '../ast/raw-expression-node.ts';
-import { RuntimeEnumDeclarationNode } from '../ast/runtime-enum-declaration-node.ts';
-import type { TemplateNode } from '../ast/template-node.ts';
-import { UnionExpressionNode } from '../ast/union-expression-node.ts';
-import type { GeneratorDialect } from '../dialect.ts';
-import { RuntimeEnumsStyle } from '../generator/runtime-enums-style.ts';
-import { toKyselyCamelCase } from '../utils/case-converter.ts';
-import { GLOBAL_DEFINITIONS } from './definitions.ts';
-import { IdentifierStyle } from './identifier-style.ts';
-import { GLOBAL_IMPORTS } from './imports.ts';
-import type { SymbolNode } from './symbol-collection.ts';
-import { SymbolCollection, SymbolType } from './symbol-collection.ts';
+import type { EnumCollection } from "../../introspector/enum-collection.ts";
+import type { ColumnMetadata } from "../../introspector/metadata/column-metadata.ts";
+import type { DatabaseMetadata } from "../../introspector/metadata/database-metadata.ts";
+import type { TableMetadata } from "../../introspector/metadata/table-metadata.ts";
+import type { Definitions, Imports, Scalars } from "../adapter.ts";
+import { AliasDeclarationNode } from "../ast/alias-declaration-node.ts";
+import { ArrayExpressionNode } from "../ast/array-expression-node.ts";
+import { ExportStatementNode } from "../ast/export-statement-node.ts";
+import type { ExpressionNode } from "../ast/expression-node.ts";
+import { GenericExpressionNode } from "../ast/generic-expression-node.ts";
+import { IdentifierNode } from "../ast/identifier-node.ts";
+import { ImportClauseNode } from "../ast/import-clause-node.ts";
+import { ImportStatementNode } from "../ast/import-statement-node.ts";
+import { InterfaceDeclarationNode } from "../ast/interface-declaration-node.ts";
+import { LiteralNode } from "../ast/literal-node.ts";
+import { NodeType } from "../ast/node-type.ts";
+import { ObjectExpressionNode } from "../ast/object-expression-node.ts";
+import { PropertyNode } from "../ast/property-node.ts";
+import { RawExpressionNode } from "../ast/raw-expression-node.ts";
+import { RuntimeEnumDeclarationNode } from "../ast/runtime-enum-declaration-node.ts";
+import type { TemplateNode } from "../ast/template-node.ts";
+import { UnionExpressionNode } from "../ast/union-expression-node.ts";
+import type { GeneratorDialect } from "../dialect.ts";
+import { RuntimeEnumsStyle } from "../generator/runtime-enums-style.ts";
+import { toKyselyCamelCase } from "../utils/case-converter.ts";
+import { GLOBAL_DEFINITIONS } from "./definitions.ts";
+import { IdentifierStyle } from "./identifier-style.ts";
+import { GLOBAL_IMPORTS } from "./imports.ts";
+import type { SymbolNode } from "./symbol-collection.ts";
+import { SymbolCollection, SymbolType } from "./symbol-collection.ts";
 
 export type Overrides = {
   /**
@@ -157,12 +157,11 @@ const collectSymbols = (
 const createContext = (options: TransformOptions): TransformContext => {
   return {
     camelCase: !!options.camelCase,
-    defaultScalar:
-      options.dialect.adapter.defaultScalar ?? new IdentifierNode('unknown'),
-    defaultSchemas:
-      options.defaultSchemas && options.defaultSchemas.length > 0
-        ? options.defaultSchemas
-        : options.dialect.adapter.defaultSchemas,
+    defaultScalar: options.dialect.adapter.defaultScalar ??
+      new IdentifierNode("unknown"),
+    defaultSchemas: options.defaultSchemas && options.defaultSchemas.length > 0
+      ? options.defaultSchemas
+      : options.dialect.adapter.defaultSchemas,
     definitions: {
       ...GLOBAL_DEFINITIONS,
       ...options.dialect.adapter.definitions,
@@ -200,7 +199,7 @@ const createDatabaseExportNode = (context: TransformContext) => {
   tableProperties.sort((a, b) => a.key.localeCompare(b.key));
 
   const body = new ObjectExpressionNode(tableProperties);
-  const argument = new InterfaceDeclarationNode('DB', body);
+  const argument = new InterfaceDeclarationNode("DB", body);
   return new ExportStatementNode(argument);
 };
 
@@ -235,7 +234,7 @@ const createDefinitionNodes = (context: TransformContext) => {
   }
 
   return definitionNodes.sort((a, b) =>
-    a.argument.name.localeCompare(b.argument.name),
+    a.argument.name.localeCompare(b.argument.name)
   );
 };
 
@@ -264,12 +263,11 @@ const getTableIdentifier = (
   table: TableMetadata,
   context: TransformContext,
 ) => {
-  const name =
-    table.schema &&
-    context.defaultSchemas.length > 0 &&
-    !context.defaultSchemas.includes(table.schema)
-      ? `${table.schema}.${table.name}`
-      : table.name;
+  const name = table.schema &&
+      context.defaultSchemas.length > 0 &&
+      !context.defaultSchemas.includes(table.schema)
+    ? `${table.schema}.${table.name}`
+    : table.name;
   return transformName(name, context);
 };
 
@@ -282,10 +280,9 @@ const transformColumn = (
   const columnOverride = context.overrides?.columns?.[columnName];
 
   if (columnOverride !== undefined) {
-    const node =
-      typeof columnOverride === 'string'
-        ? new RawExpressionNode(columnOverride)
-        : columnOverride;
+    const node = typeof columnOverride === "string"
+      ? new RawExpressionNode(columnOverride)
+      : columnOverride;
 
     collectSymbols(node, context);
 
@@ -296,23 +293,22 @@ const transformColumn = (
 
   if (column.isArray) {
     const unionizedArgs = unionize(args);
-    const isSimpleNode =
-      unionizedArgs.type === NodeType.IDENTIFIER &&
-      ['boolean', 'number', 'string'].includes(unionizedArgs.name);
+    const isSimpleNode = unionizedArgs.type === NodeType.IDENTIFIER &&
+      ["boolean", "number", "string"].includes(unionizedArgs.name);
     args = isSimpleNode
       ? [new ArrayExpressionNode(unionizedArgs)]
-      : [new GenericExpressionNode('ArrayType', [unionizedArgs])];
+      : [new GenericExpressionNode("ArrayType", [unionizedArgs])];
   }
 
   if (column.isNullable) {
-    args.push(new IdentifierNode('null'));
+    args.push(new IdentifierNode("null"));
   }
 
   let node = unionize(args);
 
   const isGenerated = column.hasDefaultValue || column.isAutoIncrementing;
   if (isGenerated) {
-    node = new GenericExpressionNode('Generated', [node]);
+    node = new GenericExpressionNode("Generated", [node]);
   }
 
   collectSymbols(node, context);
@@ -337,12 +333,11 @@ const transformColumnToArgs = (
   }.${dataType}`;
 
   // Used for serializing the name of the symbol:
-  const symbolId =
-    column.dataTypeSchema &&
-    context.defaultSchemas.length > 0 &&
-    !context.defaultSchemas.includes(column.dataTypeSchema)
-      ? `${column.dataTypeSchema}.${dataType}`
-      : dataType;
+  const symbolId = column.dataTypeSchema &&
+      context.defaultSchemas.length > 0 &&
+      !context.defaultSchemas.includes(column.dataTypeSchema)
+    ? `${column.dataTypeSchema}.${dataType}`
+    : dataType;
 
   const enumValues = context.enums.get(dataTypeId);
 
@@ -373,7 +368,7 @@ const transformColumnToArgs = (
   const symbolName = context.symbols.getName(symbolId);
 
   if (symbolName) {
-    const node = new IdentifierNode(symbolName ?? 'unknown');
+    const node = new IdentifierNode(symbolName ?? "unknown");
     return [node];
   }
 
@@ -425,7 +420,7 @@ const transformTables = (context: TransformContext) => {
 const unionize = (args: ExpressionNode[]) => {
   switch (args.length) {
     case 0:
-      return new IdentifierNode('never');
+      return new IdentifierNode("never");
     case 1:
       return args[0]!;
     default:

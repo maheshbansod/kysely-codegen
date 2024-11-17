@@ -1,4 +1,4 @@
-import { CamelCasePlugin } from 'kysely';
+import { CamelCasePlugin } from "kysely";
 
 class CaseConverter extends CamelCasePlugin {
   toCamelCase(string: string) {
@@ -41,7 +41,7 @@ export const toKyselyPascalCase = (string: string) => {
 export const toPascalCase = (string: string) => {
   return toWords(string)
     .map((w) => toUpperFirst(w.toLowerCase()))
-    .join('');
+    .join("");
 };
 
 /**
@@ -51,8 +51,8 @@ export const toPascalCase = (string: string) => {
  */
 export const toScreamingSnakeCase = (string: string) => {
   return toWords(string)
-    .map((w, i) => `${i ? '_' : ''}${w.toUpperCase()}`)
-    .join('');
+    .map((w, i) => `${i ? "_" : ""}${w.toUpperCase()}`)
+    .join("");
 };
 
 /**

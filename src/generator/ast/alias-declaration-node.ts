@@ -1,6 +1,6 @@
-import type { ExpressionNode } from './expression-node.ts';
-import { NodeType } from './node-type.ts';
-import type { TemplateNode } from './template-node.ts';
+import type { ExpressionNode } from "./expression-node.ts";
+import { NodeType } from "./node-type.ts";
+import type { TemplateNode } from "./template-node.ts";
 
 export class AliasDeclarationNode {
   readonly body: ExpressionNode | TemplateNode;

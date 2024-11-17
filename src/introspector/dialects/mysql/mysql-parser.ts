@@ -1,5 +1,5 @@
 export class MysqlParser {
-  data = '';
+  data = "";
   index = 0;
 
   constructor(data: string) {
@@ -15,7 +15,7 @@ export class MysqlParser {
   }
 
   #createSyntaxError() {
-    const character = JSON.stringify(this.data[this.index]) ?? 'EOF';
+    const character = JSON.stringify(this.data[this.index]) ?? "EOF";
     return new SyntaxError(
       `Unexpected character ${character} at index ${this.index}`,
     );
@@ -24,9 +24,9 @@ export class MysqlParser {
   #parseEnumBody() {
     const enums: string[] = [];
 
-    while (this.index < this.data.length && this.data[this.index] !== ')') {
+    while (this.index < this.data.length && this.data[this.index] !== ")") {
       if (enums.length > 0) {
-        this.#consume(',');
+        this.#consume(",");
       }
 
       const value = this.#parseEnumValue();
@@ -37,7 +37,7 @@ export class MysqlParser {
   }
 
   #parseEnumValue() {
-    let value = '';
+    let value = "";
 
     this.#consume("'");
 
@@ -59,15 +59,15 @@ export class MysqlParser {
   }
 
   parseEnum() {
-    this.#consume('e');
-    this.#consume('n');
-    this.#consume('u');
-    this.#consume('m');
-    this.#consume('(');
+    this.#consume("e");
+    this.#consume("n");
+    this.#consume("u");
+    this.#consume("m");
+    this.#consume("(");
 
     const enums = this.#parseEnumBody();
 
-    this.#consume(')');
+    this.#consume(")");
 
     return enums;
   }

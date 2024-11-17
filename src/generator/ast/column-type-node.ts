@@ -1,5 +1,5 @@
-import type { ExpressionNode } from './expression-node.ts';
-import { GenericExpressionNode } from './generic-expression-node.ts';
+import type { ExpressionNode } from "./expression-node.ts";
+import { GenericExpressionNode } from "./generic-expression-node.ts";
 
 export class ColumnTypeNode extends GenericExpressionNode {
   constructor(
@@ -9,6 +9,6 @@ export class ColumnTypeNode extends GenericExpressionNode {
       | [insertType: ExpressionNode]
       | [insertType: ExpressionNode, updateType: ExpressionNode]
   ) {
-    super('ColumnType', [selectType, ...insertAndUpdateTypes]);
+    super("ColumnType", [selectType, ...insertAndUpdateTypes]);
   }
 }

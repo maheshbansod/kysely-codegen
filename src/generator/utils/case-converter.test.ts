@@ -1,34 +1,34 @@
-import { expect, test } from 'vitest';
+import { expect, test } from "vitest";
 import {
   toKyselyCamelCase,
   toKyselyPascalCase,
   toPascalCase,
   toScreamingSnakeCase,
   toWords,
-} from './case-converter.ts';
+} from "./case-converter.ts";
 
 test(toKyselyCamelCase, () => {
-  expect(toKyselyCamelCase('checklist_item_1')).toBe('checklistItem1');
+  expect(toKyselyCamelCase("checklist_item_1")).toBe("checklistItem1");
 });
 
 test(toKyselyPascalCase, () => {
-  expect(toKyselyPascalCase('checklist_item_1')).toBe('ChecklistItem1');
+  expect(toKyselyPascalCase("checklist_item_1")).toBe("ChecklistItem1");
 });
 
 test(toPascalCase, () => {
-  expect(toPascalCase('checklist_item_1')).toBe('ChecklistItem1');
+  expect(toPascalCase("checklist_item_1")).toBe("ChecklistItem1");
 });
 
 test(toScreamingSnakeCase, () => {
-  expect(toScreamingSnakeCase('checklist_item_1')).toBe('CHECKLIST_ITEM_1');
+  expect(toScreamingSnakeCase("checklist_item_1")).toBe("CHECKLIST_ITEM_1");
 });
 
 test(toWords, () => {
-  expect(toWords('FooBar123Baz_Qux')).toStrictEqual([
-    'Foo',
-    'Bar',
-    '123',
-    'Baz',
-    'Qux',
+  expect(toWords("FooBar123Baz_Qux")).toStrictEqual([
+    "Foo",
+    "Bar",
+    "123",
+    "Baz",
+    "Qux",
   ]);
 });

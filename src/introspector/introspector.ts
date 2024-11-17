@@ -1,12 +1,12 @@
-import { Dialect, Kysely, sql } from 'kysely';
-import type { IntrospectorDialect } from './dialect.ts';
-import type { DatabaseMetadata } from './metadata/database-metadata.ts';
-import { TableMatcher } from './table-matcher.ts';
+import { Dialect, Kysely, sql } from "kysely";
+import type { IntrospectorDialect } from "./dialect.ts";
+import type { DatabaseMetadata } from "./metadata/database-metadata.ts";
+import { TableMatcher } from "./table-matcher.ts";
 
 type ConnectOptions = {
   connectionString: string;
   dialect: IntrospectorDialect;
-  customKyselyDialect?: Dialect
+  customKyselyDialect?: Dialect;
 };
 
 export type IntrospectOptions<DB> = {
@@ -29,10 +29,11 @@ export abstract class Introspector<DB> {
     // We'll create a database connection with SSL, and if it complains about SSL, try without it.
     for (const ssl of [true, false]) {
       try {
-        const dialect = options.customKyselyDialect ?? await options.dialect.createKyselyDialect({
-          connectionString: options.connectionString,
-          ssl,
-        });
+        const dialect = options.customKyselyDialect ??
+          await options.dialect.createKyselyDialect({
+            connectionString: options.connectionString,
+            ssl,
+          });
 
         const db = new Kysely<DB>({ dialect });
 
@@ -40,8 +41,8 @@ export abstract class Introspector<DB> {
 
         return db;
       } catch (error) {
-        const isSslError =
-          error instanceof Error && /\bSSL\b/.test(error.message);
+        const isSslError = error instanceof Error &&
+          /\bSSL\b/.test(error.message);
         const isUnexpectedError = !ssl || !isSslError;
 
         if (isUnexpectedError) {
@@ -50,7 +51,7 @@ export abstract class Introspector<DB> {
       }
     }
 
-    throw new Error('Failed to connect to database.');
+    throw new Error("Failed to connect to database.");
   }
 
   protected async getTables(options: IntrospectOptions<DB>) {
@@ -59,7 +60,7 @@ export abstract class Introspector<DB> {
     if (options.includePattern) {
       const tableMatcher = new TableMatcher(options.includePattern);
       tables = tables.filter(({ name, schema }) =>
-        tableMatcher.match(schema, name),
+        tableMatcher.match(schema, name)
       );
     }
 

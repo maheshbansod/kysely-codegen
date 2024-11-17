@@ -1,13 +1,13 @@
-import { promises as fs } from 'node:fs';
-import type { Kysely } from 'kysely';
-import { parse, relative, SEPARATOR } from '@std/path';
-import { performance } from 'node:perf_hooks';
-import type { GeneratorDialect } from '../dialect.ts';
-import type { Logger } from '../logger/logger.ts';
-import { transform, type Overrides } from '../transformer/transform.ts';
-import { DiffChecker } from './diff-checker.ts';
-import type { RuntimeEnumsStyle } from './runtime-enums-style.ts';
-import { Serializer } from './serializer.ts';
+import { promises as fs } from "node:fs";
+import type { Kysely } from "kysely";
+import { parse, relative, SEPARATOR } from "@std/path";
+import { performance } from "node:perf_hooks";
+import type { GeneratorDialect } from "../dialect.ts";
+import type { Logger } from "../logger/logger.ts";
+import { type Overrides, transform } from "../transformer/transform.ts";
+import { DiffChecker } from "./diff-checker.ts";
+import type { RuntimeEnumsStyle } from "./runtime-enums-style.ts";
+import { Serializer } from "./serializer.ts";
 
 const sep = SEPARATOR;
 
@@ -37,7 +37,7 @@ export type GenerateOptions = {
 export const generate = async (options: GenerateOptions) => {
   const startTime = performance.now();
 
-  options.logger?.info('Introspecting database...');
+  options.logger?.info("Introspecting database...");
 
   const metadata = await options.dialect.introspector.introspect({
     db: options.db,
@@ -65,8 +65,7 @@ export const generate = async (options: GenerateOptions) => {
     runtimeEnumsStyle: options.runtimeEnumsStyle,
   });
 
-  const serializer =
-    options.serializer ??
+  const serializer = options.serializer ??
     new Serializer({
       camelCase: options.camelCase,
       runtimeEnumsStyle: options.runtimeEnumsStyle,
@@ -87,10 +86,10 @@ export const generate = async (options: GenerateOptions) => {
       let existingTypes: string;
 
       try {
-        existingTypes = await fs.readFile(relativeOutDir, 'utf8');
+        existingTypes = await fs.readFile(relativeOutDir, "utf8");
       } catch (error: unknown) {
         options.logger?.error(error);
-        throw new Error('Failed to load existing types');
+        throw new Error("Failed to load existing types");
       }
 
       const diffChecker = new DiffChecker();
@@ -118,7 +117,7 @@ export const generate = async (options: GenerateOptions) => {
       const endTime = performance.now();
       const duration = Math.round(endTime - startTime);
       const tableCount = metadata.tables.length;
-      const s = tableCount === 1 ? '' : 's';
+      const s = tableCount === 1 ? "" : "s";
 
       options.logger?.success(
         `Introspected ${tableCount} table${s} and generated ${relativeOutDir} in ${duration}ms.\n`,

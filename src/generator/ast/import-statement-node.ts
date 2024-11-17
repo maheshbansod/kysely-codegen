@@ -1,5 +1,5 @@
-import type { ImportClauseNode } from './import-clause-node.ts';
-import { NodeType } from './node-type.ts';
+import type { ImportClauseNode } from "./import-clause-node.ts";
+import { NodeType } from "./node-type.ts";
 
 export class ImportStatementNode {
   readonly imports: ImportClauseNode[];

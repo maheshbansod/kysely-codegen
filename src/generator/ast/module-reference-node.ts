@@ -1,4 +1,4 @@
-import { NodeType } from './node-type.ts';
+import { NodeType } from "./node-type.ts";
 
 export class ModuleReferenceNode {
   readonly name: string;

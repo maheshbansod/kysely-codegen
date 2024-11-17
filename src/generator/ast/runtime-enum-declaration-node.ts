@@ -1,8 +1,11 @@
-import type { IdentifierStyle } from '../transformer/identifier-style.ts';
-import type { SymbolEntry } from '../transformer/symbol-collection.ts';
-import { SymbolCollection, SymbolType } from '../transformer/symbol-collection.ts';
-import { LiteralNode } from './literal-node.ts';
-import { NodeType } from './node-type.ts';
+import type { IdentifierStyle } from "../transformer/identifier-style.ts";
+import type { SymbolEntry } from "../transformer/symbol-collection.ts";
+import {
+  SymbolCollection,
+  SymbolType,
+} from "../transformer/symbol-collection.ts";
+import { LiteralNode } from "./literal-node.ts";
+import { NodeType } from "./node-type.ts";
 
 type RuntimeEnumMember = [key: string, value: LiteralNode<string>];
 

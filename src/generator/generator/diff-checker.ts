@@ -1,4 +1,4 @@
-import gitDiff from 'git-diff';
+import gitDiff from "git-diff";
 
 export class DiffChecker {
   #sanitize(string: string) {

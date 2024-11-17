@@ -4,6 +4,11 @@
     "@std/path": "jsr:@std/path@^1.0.8"
   },
   "lint": {
-    "exclude": ["no-explicit-any"]
-  }
+    "exclude": [
+      "no-explicit-any"
+    ]
+  },
+  "name": "@maheshbansod/kysely-codegen",
+  "version": "0.1.0",
+  "exports": "./src/index.ts"
 }

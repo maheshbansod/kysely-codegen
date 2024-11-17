@@ -1,20 +1,20 @@
-import { deepStrictEqual } from 'node:assert';
-import { type Kysely } from 'kysely';
-import parsePostgresInterval from 'postgres-interval';
-import { describe, test } from 'vitest';
-import { NumericParser } from '../introspector/dialects/postgres/numeric-parser.ts';
-import { migrate } from '../introspector/introspector.fixtures.ts';
-import type { IntrospectorDialect } from './dialect.ts';
-import { LibsqlIntrospectorDialect } from './dialects/libsql/libsql-dialect.ts';
-import { MysqlIntrospectorDialect } from './dialects/mysql/mysql-dialect.ts';
-import { DateParser } from './dialects/postgres/date-parser.ts';
-import { PostgresIntrospectorDialect } from './dialects/postgres/postgres-dialect.ts';
-import { SqliteIntrospectorDialect } from './dialects/sqlite/sqlite-dialect.ts';
-import { EnumCollection } from './enum-collection.ts';
-import { Introspector } from './introspector.ts';
-import { ColumnMetadata } from './metadata/column-metadata.ts';
-import { DatabaseMetadata } from './metadata/database-metadata.ts';
-import { TableMetadata } from './metadata/table-metadata.ts';
+import { deepStrictEqual } from "node:assert";
+import { type Kysely } from "kysely";
+import parsePostgresInterval from "postgres-interval";
+import { describe, test } from "vitest";
+import { NumericParser } from "../introspector/dialects/postgres/numeric-parser.ts";
+import { migrate } from "../introspector/introspector.fixtures.ts";
+import type { IntrospectorDialect } from "./dialect.ts";
+import { LibsqlIntrospectorDialect } from "./dialects/libsql/libsql-dialect.ts";
+import { MysqlIntrospectorDialect } from "./dialects/mysql/mysql-dialect.ts";
+import { DateParser } from "./dialects/postgres/date-parser.ts";
+import { PostgresIntrospectorDialect } from "./dialects/postgres/postgres-dialect.ts";
+import { SqliteIntrospectorDialect } from "./dialects/sqlite/sqlite-dialect.ts";
+import { EnumCollection } from "./enum-collection.ts";
+import { Introspector } from "./introspector.ts";
+import { ColumnMetadata } from "./metadata/column-metadata.ts";
+import { DatabaseMetadata } from "./metadata/database-metadata.ts";
+import { TableMetadata } from "./metadata/table-metadata.ts";
 
 type Test = {
   connectionString: string;
@@ -25,48 +25,48 @@ type Test = {
 
 const TESTS: Test[] = [
   {
-    connectionString: 'mysql://user:password@localhost/database',
+    connectionString: "mysql://user:password@localhost/database",
     dialect: new MysqlIntrospectorDialect(),
     inputValues: { false: 0, id: 1, true: 1 },
     outputValues: { false: 0, id: 1, true: 1 },
   },
   {
-    connectionString: 'postgres://user:password@localhost:5433/database',
+    connectionString: "postgres://user:password@localhost:5433/database",
     dialect: new PostgresIntrospectorDialect({
       dateParser: DateParser.STRING,
       numericParser: NumericParser.NUMBER_OR_STRING,
     }),
     inputValues: {
-      date: '2024-10-14',
+      date: "2024-10-14",
       false: false,
       id: 1,
-      interval1: parsePostgresInterval('1 day'),
-      interval2: '24 months',
+      interval1: parsePostgresInterval("1 day"),
+      interval2: "24 months",
       numeric1: Number.MAX_SAFE_INTEGER,
       numeric2: String(Number.MAX_SAFE_INTEGER + 1),
-      timestamps: ['2024-09-17T08:05:00.000Z'],
+      timestamps: ["2024-09-17T08:05:00.000Z"],
       true: true,
     },
     outputValues: {
-      date: '2024-10-14',
+      date: "2024-10-14",
       false: false,
       id: 1,
       interval1: { days: 1 },
       interval2: { years: 2 },
       numeric1: Number.MAX_SAFE_INTEGER,
       numeric2: String(Number.MAX_SAFE_INTEGER + 1),
-      timestamps: [new Date('2024-09-17T08:05:00.000Z')],
+      timestamps: [new Date("2024-09-17T08:05:00.000Z")],
       true: true,
     },
   },
   {
-    connectionString: ':memory:',
+    connectionString: ":memory:",
     dialect: new SqliteIntrospectorDialect(),
     inputValues: { false: 0, id: 1, true: 1 },
     outputValues: { false: 0, id: 1, true: 1 },
   },
   {
-    connectionString: 'libsql://localhost:8080?tls=0',
+    connectionString: "libsql://localhost:8080?tls=0",
     dialect: new LibsqlIntrospectorDialect(),
     inputValues: { false: 0, id: 1, true: 1 },
     outputValues: { false: 0, id: 1, true: 1 },
@@ -78,10 +78,10 @@ const testValues = async (
   inputValues: Record<string, unknown>,
   outputValues: Record<string, unknown>,
 ) => {
-  await db.insertInto('fooBar').values(inputValues).execute();
+  await db.insertInto("fooBar").values(inputValues).execute();
 
   const row = await db
-    .selectFrom('fooBar')
+    .selectFrom("fooBar")
     .selectAll()
     .executeTakeFirstOrThrow();
 
@@ -90,7 +90,7 @@ const testValues = async (
 
     if (
       actualValue instanceof Object &&
-      actualValue.constructor.name === 'PostgresInterval'
+      actualValue.constructor.name === "PostgresInterval"
     ) {
       deepStrictEqual({ ...actualValue }, expectedValue);
     } else {
@@ -100,13 +100,15 @@ const testValues = async (
 };
 
 describe(Introspector.name, () => {
-  describe('should return the correct metadata', () => {
-    for (const {
-      connectionString,
-      dialect,
-      inputValues,
-      outputValues,
-    } of TESTS) {
+  describe("should return the correct metadata", () => {
+    for (
+      const {
+        connectionString,
+        dialect,
+        inputValues,
+        outputValues,
+      } of TESTS
+    ) {
       test(dialect.constructor.name, async () => {
         const db = await migrate(dialect, connectionString);
         await testValues(db, inputValues, outputValues);
@@ -120,32 +122,32 @@ describe(Introspector.name, () => {
                 new TableMetadata({
                   columns: [
                     new ColumnMetadata({
-                      dataType: 'tinyint',
-                      name: 'false',
+                      dataType: "tinyint",
+                      name: "false",
                     }),
                     new ColumnMetadata({
-                      dataType: 'tinyint',
-                      name: 'true',
+                      dataType: "tinyint",
+                      name: "true",
                     }),
                     new ColumnMetadata({
-                      dataType: 'text',
+                      dataType: "text",
                       isNullable: true,
-                      name: 'overridden',
+                      name: "overridden",
                     }),
                     new ColumnMetadata({
-                      dataType: 'bigint',
+                      dataType: "bigint",
                       isAutoIncrementing: true,
-                      name: 'id',
+                      name: "id",
                     }),
                     new ColumnMetadata({
-                      dataType: 'enum',
-                      enumValues: ['CONFIRMED', 'UNCONFIRMED'],
+                      dataType: "enum",
+                      enumValues: ["CONFIRMED", "UNCONFIRMED"],
                       isNullable: true,
-                      name: 'user_status',
+                      name: "user_status",
                     }),
                   ],
-                  name: 'foo_bar',
-                  schema: 'database',
+                  name: "foo_bar",
+                  schema: "database",
                 }),
               ],
             }),
@@ -155,8 +157,8 @@ describe(Introspector.name, () => {
             metadata,
             new DatabaseMetadata({
               enums: new EnumCollection({
-                'public.status': ['CONFIRMED', 'UNCONFIRMED'],
-                'test.status': ['ABC_DEF', 'GHI_JKL'],
+                "public.status": ["CONFIRMED", "UNCONFIRMED"],
+                "test.status": ["ABC_DEF", "GHI_JKL"],
               }),
               tables: [
                 new TableMetadata({
@@ -164,145 +166,145 @@ describe(Introspector.name, () => {
                     new ColumnMetadata({
                       comment:
                         "This is a comment on a column.\r\n\r\nIt's nice, isn't it?",
-                      dataType: 'bool',
-                      dataTypeSchema: 'pg_catalog',
-                      name: 'false',
+                      dataType: "bool",
+                      dataTypeSchema: "pg_catalog",
+                      name: "false",
                     }),
                     new ColumnMetadata({
-                      dataType: 'bool',
-                      dataTypeSchema: 'pg_catalog',
-                      name: 'true',
+                      dataType: "bool",
+                      dataTypeSchema: "pg_catalog",
+                      name: "true",
                     }),
                     new ColumnMetadata({
-                      dataType: 'text',
-                      dataTypeSchema: 'pg_catalog',
+                      dataType: "text",
+                      dataTypeSchema: "pg_catalog",
                       isNullable: true,
-                      name: 'overridden',
+                      name: "overridden",
                     }),
                     new ColumnMetadata({
-                      dataType: 'int4',
-                      dataTypeSchema: 'pg_catalog',
+                      dataType: "int4",
+                      dataTypeSchema: "pg_catalog",
                       hasDefaultValue: true,
                       isAutoIncrementing: true,
-                      name: 'id',
+                      name: "id",
                     }),
                     new ColumnMetadata({
-                      dataType: 'date',
-                      dataTypeSchema: 'pg_catalog',
+                      dataType: "date",
+                      dataTypeSchema: "pg_catalog",
                       isNullable: true,
-                      name: 'date',
+                      name: "date",
                     }),
                     new ColumnMetadata({
-                      dataType: 'status',
-                      dataTypeSchema: 'public',
-                      enumValues: ['CONFIRMED', 'UNCONFIRMED'],
+                      dataType: "status",
+                      dataTypeSchema: "public",
+                      enumValues: ["CONFIRMED", "UNCONFIRMED"],
                       isNullable: true,
-                      name: 'user_status',
+                      name: "user_status",
                     }),
                     new ColumnMetadata({
-                      dataType: 'status',
-                      dataTypeSchema: 'test',
-                      enumValues: ['ABC_DEF', 'GHI_JKL'],
+                      dataType: "status",
+                      dataTypeSchema: "test",
+                      enumValues: ["ABC_DEF", "GHI_JKL"],
                       isNullable: true,
-                      name: 'user_status_2',
+                      name: "user_status_2",
                     }),
                     new ColumnMetadata({
-                      dataType: 'text',
-                      dataTypeSchema: 'pg_catalog',
+                      dataType: "text",
+                      dataTypeSchema: "pg_catalog",
                       isArray: true,
                       isNullable: true,
-                      name: 'array',
+                      name: "array",
                     }),
                     new ColumnMetadata({
-                      dataType: 'int4',
-                      dataTypeSchema: 'public',
+                      dataType: "int4",
+                      dataTypeSchema: "public",
                       isNullable: true,
-                      name: 'nullable_pos_int',
+                      name: "nullable_pos_int",
                     }),
                     new ColumnMetadata({
-                      dataType: 'int4',
-                      dataTypeSchema: 'public',
+                      dataType: "int4",
+                      dataTypeSchema: "public",
                       hasDefaultValue: true,
                       isNullable: true,
-                      name: 'defaulted_nullable_pos_int',
+                      name: "defaulted_nullable_pos_int",
                     }),
                     new ColumnMetadata({
-                      dataType: 'int4',
-                      dataTypeSchema: 'public',
+                      dataType: "int4",
+                      dataTypeSchema: "public",
                       hasDefaultValue: true,
-                      name: 'defaulted_required_pos_int',
+                      name: "defaulted_required_pos_int",
                     }),
                     new ColumnMetadata({
-                      dataType: 'int4',
-                      dataTypeSchema: 'public',
+                      dataType: "int4",
+                      dataTypeSchema: "public",
                       isNullable: true,
-                      name: 'child_domain',
+                      name: "child_domain",
                     }),
                     new ColumnMetadata({
-                      dataType: 'bool',
-                      dataTypeSchema: 'test',
+                      dataType: "bool",
+                      dataTypeSchema: "test",
                       isNullable: true,
-                      name: 'test_domain_is_bool',
+                      name: "test_domain_is_bool",
                     }),
                     new ColumnMetadata({
-                      dataType: 'timestamptz',
-                      dataTypeSchema: 'pg_catalog',
+                      dataType: "timestamptz",
+                      dataTypeSchema: "pg_catalog",
                       isArray: true,
                       isNullable: true,
-                      name: 'timestamps',
+                      name: "timestamps",
                     }),
                     new ColumnMetadata({
-                      dataType: 'interval',
-                      dataTypeSchema: 'pg_catalog',
+                      dataType: "interval",
+                      dataTypeSchema: "pg_catalog",
                       isNullable: true,
-                      name: 'interval1',
+                      name: "interval1",
                     }),
                     new ColumnMetadata({
-                      dataType: 'interval',
-                      dataTypeSchema: 'pg_catalog',
+                      dataType: "interval",
+                      dataTypeSchema: "pg_catalog",
                       isNullable: true,
-                      name: 'interval2',
+                      name: "interval2",
                     }),
                     new ColumnMetadata({
-                      dataType: 'json',
-                      dataTypeSchema: 'pg_catalog',
+                      dataType: "json",
+                      dataTypeSchema: "pg_catalog",
                       isNullable: true,
-                      name: 'json',
+                      name: "json",
                     }),
                     new ColumnMetadata({
-                      dataType: 'json',
-                      dataTypeSchema: 'pg_catalog',
+                      dataType: "json",
+                      dataTypeSchema: "pg_catalog",
                       isNullable: true,
-                      name: 'json_typed',
+                      name: "json_typed",
                     }),
                     new ColumnMetadata({
-                      dataType: 'numeric',
-                      dataTypeSchema: 'pg_catalog',
+                      dataType: "numeric",
+                      dataTypeSchema: "pg_catalog",
                       isNullable: true,
-                      name: 'numeric1',
+                      name: "numeric1",
                     }),
                     new ColumnMetadata({
-                      dataType: 'numeric',
-                      dataTypeSchema: 'pg_catalog',
+                      dataType: "numeric",
+                      dataTypeSchema: "pg_catalog",
                       isNullable: true,
-                      name: 'numeric2',
+                      name: "numeric2",
                     }),
                   ],
-                  name: 'foo_bar',
-                  schema: 'public',
+                  name: "foo_bar",
+                  schema: "public",
                 }),
                 new TableMetadata({
                   columns: [
                     new ColumnMetadata({
-                      dataType: 'int4',
-                      dataTypeSchema: 'pg_catalog',
+                      dataType: "int4",
+                      dataTypeSchema: "pg_catalog",
                       hasDefaultValue: true,
                       isAutoIncrementing: true,
-                      name: 'id',
+                      name: "id",
                     }),
                   ],
-                  name: 'partitioned_table',
-                  schema: 'public',
+                  name: "partitioned_table",
+                  schema: "public",
                 }),
               ],
             }),
@@ -315,30 +317,30 @@ describe(Introspector.name, () => {
                 new TableMetadata({
                   columns: [
                     new ColumnMetadata({
-                      dataType: 'boolean',
-                      name: 'false',
+                      dataType: "boolean",
+                      name: "false",
                     }),
                     new ColumnMetadata({
-                      dataType: 'boolean',
-                      name: 'true',
+                      dataType: "boolean",
+                      name: "true",
                     }),
                     new ColumnMetadata({
-                      dataType: 'TEXT',
+                      dataType: "TEXT",
                       isNullable: true,
-                      name: 'overridden',
+                      name: "overridden",
                     }),
                     new ColumnMetadata({
-                      dataType: 'INTEGER',
+                      dataType: "INTEGER",
                       isAutoIncrementing: true,
-                      name: 'id',
+                      name: "id",
                     }),
                     new ColumnMetadata({
-                      dataType: 'TEXT',
+                      dataType: "TEXT",
                       isNullable: true,
-                      name: 'user_status',
+                      name: "user_status",
                     }),
                   ],
-                  name: 'foo_bar',
+                  name: "foo_bar",
                 }),
               ],
             }),

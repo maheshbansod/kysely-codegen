@@ -1,29 +1,29 @@
 // deno-lint-ignore-file no-explicit-any
-import minimist from 'minimist';
-import { ConnectionStringParser } from '../generator/connection-string-parser.ts';
-import type { DialectName } from '../generator/dialect-manager.ts';
-import { DialectManager } from '../generator/dialect-manager.ts';
-import { generate } from '../generator/generator/generate.ts';
-import { RuntimeEnumsStyle } from '../generator/generator/runtime-enums-style.ts';
-import { LogLevel } from '../generator/logger/log-level.ts';
-import { Logger } from '../generator/logger/logger.ts';
-import type { Overrides } from '../generator/transformer/transform.ts';
-import type { Dialect } from 'kysely';
+import minimist from "minimist";
+import { ConnectionStringParser } from "../generator/connection-string-parser.ts";
+import type { DialectName } from "../generator/dialect-manager.ts";
+import { DialectManager } from "../generator/dialect-manager.ts";
+import { generate } from "../generator/generator/generate.ts";
+import { RuntimeEnumsStyle } from "../generator/generator/runtime-enums-style.ts";
+import { LogLevel } from "../generator/logger/log-level.ts";
+import { Logger } from "../generator/logger/logger.ts";
+import type { Overrides } from "../generator/transformer/transform.ts";
+import type { Dialect } from "kysely";
 import {
   DateParser,
   DEFAULT_DATE_PARSER,
-} from '../introspector/dialects/postgres/date-parser.ts';
+} from "../introspector/dialects/postgres/date-parser.ts";
 import {
   DEFAULT_NUMERIC_PARSER,
   NumericParser,
-} from '../introspector/dialects/postgres/numeric-parser.ts';
+} from "../introspector/dialects/postgres/numeric-parser.ts";
 import {
   DEFAULT_LOG_LEVEL,
   DEFAULT_OUT_FILE,
   DEFAULT_URL,
   VALID_DIALECTS,
-} from './constants.ts';
-import { FLAGS, serializeFlags } from './flags.ts';
+} from "./constants.ts";
+import { FLAGS, serializeFlags } from "./flags.ts";
 
 export type CliOptions = {
   camelCase?: boolean;
@@ -73,8 +73,8 @@ export class Cli {
     const logger = new Logger(options.logLevel);
 
     const connectionStringParser = new ConnectionStringParser();
-    const { connectionString, inferredDialectName } =
-      connectionStringParser.parse({
+    const { connectionString, inferredDialectName } = connectionStringParser
+      .parse({
         connectionString: options.url ?? DEFAULT_URL,
         dialectName: options.dialectName,
         envFile: options.envFile,
@@ -100,7 +100,7 @@ export class Cli {
     const db = await dialect.introspector.connect({
       connectionString,
       dialect,
-      customKyselyDialect: options.customKyselyDialect
+      customKyselyDialect: options.customKyselyDialect,
     });
 
     await generate({
@@ -126,14 +126,14 @@ export class Cli {
   }
 
   #parseBoolean(input: any) {
-    return !!input && input !== 'false';
+    return !!input && input !== "false";
   }
 
   #parseDateParser(input: any) {
     switch (input) {
-      case 'string':
+      case "string":
         return DateParser.STRING;
-      case 'timestamp':
+      case "timestamp":
         return DateParser.TIMESTAMP;
       default:
         return DEFAULT_DATE_PARSER;
@@ -142,15 +142,15 @@ export class Cli {
 
   #parseLogLevel(input: any) {
     switch (input) {
-      case 'silent':
+      case "silent":
         return LogLevel.SILENT;
-      case 'info':
+      case "info":
         return LogLevel.INFO;
-      case 'error':
+      case "error":
         return LogLevel.ERROR;
-      case 'debug':
+      case "debug":
         return LogLevel.DEBUG;
-      case 'warn':
+      case "warn":
         return LogLevel.WARN;
       default:
         return DEFAULT_LOG_LEVEL;
@@ -159,11 +159,11 @@ export class Cli {
 
   #parseNumericParser(input: any) {
     switch (input) {
-      case 'number':
+      case "number":
         return NumericParser.NUMBER;
-      case 'number-or-string':
+      case "number-or-string":
         return NumericParser.NUMBER_OR_STRING;
-      case 'string':
+      case "string":
         return NumericParser.STRING;
       default:
         return DEFAULT_NUMERIC_PARSER;
@@ -172,9 +172,9 @@ export class Cli {
 
   #parseRuntimeEnumsStyle(input: any) {
     switch (input) {
-      case 'pascal-case':
+      case "pascal-case":
         return RuntimeEnumsStyle.PASCAL_CASE;
-      case 'screaming-snake-case':
+      case "screaming-snake-case":
         return RuntimeEnumsStyle.SCREAMING_SNAKE_CASE;
     }
   }
@@ -191,8 +191,8 @@ export class Cli {
 
   #showHelp() {
     console.info(
-      ['', 'kysely-codegen [options]', '', serializeFlags(FLAGS), ''].join(
-        '\n',
+      ["", "kysely-codegen [options]", "", serializeFlags(FLAGS), ""].join(
+        "\n",
       ),
     );
     Deno.exit(0);
@@ -200,45 +200,44 @@ export class Cli {
 
   parseOptions(args: string[], options?: { silent?: boolean }): CliOptions {
     const argv = minimist(args);
-    const logLevel = (this.logLevel = this.#parseLogLevel(argv['log-level']));
+    const logLevel = (this.logLevel = this.#parseLogLevel(argv["log-level"]));
 
     const _: string[] = argv._;
-    const camelCase = this.#parseBoolean(argv['camel-case']);
-    const dateParser = this.#parseDateParser(argv['date-parser']);
+    const camelCase = this.#parseBoolean(argv["camel-case"]);
+    const dateParser = this.#parseDateParser(argv["date-parser"]);
     const dialectName = this.#parseString(argv.dialect) as DialectName;
     const domains = this.#parseBoolean(argv.domains);
-    const envFile = this.#parseString(argv['env-file']);
-    const excludePattern = this.#parseString(argv['exclude-pattern']);
-    const help =
-      !!argv.h || !!argv.help || _.includes('-h') || _.includes('--help');
-    const includePattern = this.#parseString(argv['include-pattern']);
-    const numericParser = this.#parseNumericParser(argv['numeric-parser']);
-    const outFile =
-      this.#parseString(argv['out-file']) ??
+    const envFile = this.#parseString(argv["env-file"]);
+    const excludePattern = this.#parseString(argv["exclude-pattern"]);
+    const help = !!argv.h || !!argv.help || _.includes("-h") ||
+      _.includes("--help");
+    const includePattern = this.#parseString(argv["include-pattern"]);
+    const numericParser = this.#parseNumericParser(argv["numeric-parser"]);
+    const outFile = this.#parseString(argv["out-file"]) ??
       (argv.print ? undefined : DEFAULT_OUT_FILE);
     const overrides = argv.overrides ? JSON.parse(argv.overrides) : undefined;
     const partitions = this.#parseBoolean(argv.partitions);
     const print = this.#parseBoolean(argv.print);
-    const runtimeEnums = this.#parseBoolean(argv['runtime-enums']);
+    const runtimeEnums = this.#parseBoolean(argv["runtime-enums"]);
     const runtimeEnumsStyle = this.#parseRuntimeEnumsStyle(
-      argv['runtime-enums-style'],
+      argv["runtime-enums-style"],
     );
     const schemas = this.#parseStringArray(argv.schema);
     const singular = this.#parseBoolean(argv.singular);
     const typeOnlyImports = this.#parseBoolean(
-      argv['type-only-imports'] ?? true,
+      argv["type-only-imports"] ?? true,
     );
     const url = this.#parseString(argv.url) ?? DEFAULT_URL;
     const verify = this.#parseBoolean(argv.verify);
 
     for (const key in argv) {
       if (
-        key !== '_' &&
+        key !== "_" &&
         !FLAGS.some((flag) => {
           return [
             flag.shortName,
             flag.longName,
-            ...(flag.longName.startsWith('no-')
+            ...(flag.longName.startsWith("no-")
               ? [flag.longName.slice(3)]
               : []),
           ].includes(key);
@@ -253,7 +252,7 @@ export class Cli {
     }
 
     if (dialectName && !VALID_DIALECTS.includes(dialectName)) {
-      const dialectValues = VALID_DIALECTS.join(', ');
+      const dialectValues = VALID_DIALECTS.join(", ");
       throw new RangeError(
         `Parameter '--dialect' must have one of the following values: ${dialectValues}`,
       );
@@ -262,8 +261,8 @@ export class Cli {
     if (!url) {
       throw new TypeError(
         "Parameter '--url' must be a valid connection string. Examples:\n\n" +
-          '  --url=postgres://username:password@mydomain.com/database\n' +
-          '  --url=env(DATABASE_URL)',
+          "  --url=postgres://username:password@mydomain.com/database\n" +
+          "  --url=env(DATABASE_URL)",
       );
     }
 

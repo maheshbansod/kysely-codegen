@@ -1,17 +1,21 @@
-import { deepStrictEqual } from 'node:assert';
-import { execa } from 'execa';
-import { join } from '@std/path';
-import { describe, it } from 'vitest';
-import packageJson from '../../package.json' with { type: "json" };
-import { LogLevel } from '../generator/logger/log-level.ts';
+import { deepStrictEqual } from "node:assert";
+import { execa } from "execa";
+import { join } from "@std/path";
+import { describe, it } from "vitest";
+import packageJson from "../../package.json" with { type: "json" };
+import { LogLevel } from "../generator/logger/log-level.ts";
 import {
   DateParser,
   DEFAULT_DATE_PARSER,
-} from '../introspector/dialects/postgres/date-parser.ts';
-import { DEFAULT_NUMERIC_PARSER } from '../introspector/dialects/postgres/numeric-parser.ts';
-import type { CliOptions } from './cli.ts';
-import { Cli } from './cli.ts';
-import { DEFAULT_LOG_LEVEL, DEFAULT_OUT_FILE, DEFAULT_URL } from './constants.ts';
+} from "../introspector/dialects/postgres/date-parser.ts";
+import { DEFAULT_NUMERIC_PARSER } from "../introspector/dialects/postgres/numeric-parser.ts";
+import type { CliOptions } from "./cli.ts";
+import { Cli } from "./cli.ts";
+import {
+  DEFAULT_LOG_LEVEL,
+  DEFAULT_OUT_FILE,
+  DEFAULT_URL,
+} from "./constants.ts";
 
 describe(Cli.name, () => {
   const cli = new Cli();
@@ -39,14 +43,14 @@ describe(Cli.name, () => {
     verify: false,
   };
 
-  it('should be able to start the CLI', async () => {
+  it("should be able to start the CLI", async () => {
     await execa`pnpm build`;
-    const binPath = join(Deno.cwd(), packageJson.bin['kysely-codegen']);
+    const binPath = join(Deno.cwd(), packageJson.bin["kysely-codegen"]);
     const output = await execa`node ${binPath} --help`.then((a) => a.stdout);
-    deepStrictEqual(output.includes('--help, -h'), true);
+    deepStrictEqual(output.includes("--help, -h"), true);
   });
 
-  it('should parse options correctly', () => {
+  it("should parse options correctly", () => {
     const assert = (args: string[], expectedOptions: Partial<CliOptions>) => {
       const cliOptions = cli.parseOptions(args, { silent: true });
 
@@ -56,33 +60,33 @@ describe(Cli.name, () => {
       });
     };
 
-    assert(['--camel-case'], { camelCase: true });
-    assert(['--date-parser=timestamp'], { dateParser: DateParser.TIMESTAMP });
-    assert(['--date-parser=string'], { dateParser: DateParser.STRING });
-    assert(['--dialect=mysql'], { dialectName: 'mysql' });
-    assert(['--domains'], { domains: true });
-    assert(['--exclude-pattern=public._*'], { excludePattern: 'public._*' });
-    assert(['--help'], {});
-    assert(['-h'], {});
-    assert(['--include-pattern=public._*'], { includePattern: 'public._*' });
-    assert(['--log-level=debug'], { logLevel: LogLevel.DEBUG });
-    assert(['--no-domains'], { domains: false });
-    assert(['--no-type-only-imports'], { typeOnlyImports: false });
-    assert(['--out-file=./db.ts'], { outFile: './db.ts' });
+    assert(["--camel-case"], { camelCase: true });
+    assert(["--date-parser=timestamp"], { dateParser: DateParser.TIMESTAMP });
+    assert(["--date-parser=string"], { dateParser: DateParser.STRING });
+    assert(["--dialect=mysql"], { dialectName: "mysql" });
+    assert(["--domains"], { domains: true });
+    assert(["--exclude-pattern=public._*"], { excludePattern: "public._*" });
+    assert(["--help"], {});
+    assert(["-h"], {});
+    assert(["--include-pattern=public._*"], { includePattern: "public._*" });
+    assert(["--log-level=debug"], { logLevel: LogLevel.DEBUG });
+    assert(["--no-domains"], { domains: false });
+    assert(["--no-type-only-imports"], { typeOnlyImports: false });
+    assert(["--out-file=./db.ts"], { outFile: "./db.ts" });
     assert(
       [`--overrides={"columns":{"table.override":"{ foo: \\"bar\\" }"}}`],
-      { overrides: { columns: { 'table.override': '{ foo: "bar" }' } } },
+      { overrides: { columns: { "table.override": '{ foo: "bar" }' } } },
     );
-    assert(['--print'], { outFile: undefined, print: true });
-    assert(['--schema=foo'], { schemas: ['foo'] });
-    assert(['--schema=foo', '--schema=bar'], { schemas: ['foo', 'bar'] });
-    assert(['--singular'], { singular: true });
-    assert(['--type-only-imports'], { typeOnlyImports: true });
-    assert(['--type-only-imports=false'], { typeOnlyImports: false });
-    assert(['--type-only-imports=true'], { typeOnlyImports: true });
-    assert(['--url=postgres://u:p@s/d'], { url: 'postgres://u:p@s/d' });
-    assert(['--verify'], { verify: true });
-    assert(['--verify=false'], { verify: false });
-    assert(['--verify=true'], { verify: true });
+    assert(["--print"], { outFile: undefined, print: true });
+    assert(["--schema=foo"], { schemas: ["foo"] });
+    assert(["--schema=foo", "--schema=bar"], { schemas: ["foo", "bar"] });
+    assert(["--singular"], { singular: true });
+    assert(["--type-only-imports"], { typeOnlyImports: true });
+    assert(["--type-only-imports=false"], { typeOnlyImports: false });
+    assert(["--type-only-imports=true"], { typeOnlyImports: true });
+    assert(["--url=postgres://u:p@s/d"], { url: "postgres://u:p@s/d" });
+    assert(["--verify"], { verify: true });
+    assert(["--verify=false"], { verify: false });
+    assert(["--verify=true"], { verify: true });
   });
 });

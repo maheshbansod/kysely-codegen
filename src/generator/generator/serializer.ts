@@ -1,27 +1,27 @@
-import pluralize from 'pluralize';
+import pluralize from "pluralize";
 const singular = pluralize.singular;
-import type { AliasDeclarationNode } from '../ast/alias-declaration-node.ts';
-import type { ArrayExpressionNode } from '../ast/array-expression-node.ts';
-import type { ExportStatementNode } from '../ast/export-statement-node.ts';
-import type { ExpressionNode } from '../ast/expression-node.ts';
-import type { ExtendsClauseNode } from '../ast/extends-clause-node.ts';
-import type { GenericExpressionNode } from '../ast/generic-expression-node.ts';
-import type { IdentifierNode } from '../ast/identifier-node.ts';
-import type { ImportClauseNode } from '../ast/import-clause-node.ts';
-import type { ImportStatementNode } from '../ast/import-statement-node.ts';
-import type { InferClauseNode } from '../ast/infer-clause-node.ts';
-import type { InterfaceDeclarationNode } from '../ast/interface-declaration-node.ts';
-import type { LiteralNode } from '../ast/literal-node.ts';
-import type { MappedTypeNode } from '../ast/mapped-type-node.ts';
-import { NodeType } from '../ast/node-type.ts';
-import type { ObjectExpressionNode } from '../ast/object-expression-node.ts';
-import type { PropertyNode } from '../ast/property-node.ts';
-import type { RawExpressionNode } from '../ast/raw-expression-node.ts';
-import type { RuntimeEnumDeclarationNode } from '../ast/runtime-enum-declaration-node.ts';
-import type { StatementNode } from '../ast/statement-node.ts';
-import type { UnionExpressionNode } from '../ast/union-expression-node.ts';
-import { toPascalCase, toScreamingSnakeCase } from '../utils/case-converter.ts';
-import { RuntimeEnumsStyle } from './runtime-enums-style.ts';
+import type { AliasDeclarationNode } from "../ast/alias-declaration-node.ts";
+import type { ArrayExpressionNode } from "../ast/array-expression-node.ts";
+import type { ExportStatementNode } from "../ast/export-statement-node.ts";
+import type { ExpressionNode } from "../ast/expression-node.ts";
+import type { ExtendsClauseNode } from "../ast/extends-clause-node.ts";
+import type { GenericExpressionNode } from "../ast/generic-expression-node.ts";
+import type { IdentifierNode } from "../ast/identifier-node.ts";
+import type { ImportClauseNode } from "../ast/import-clause-node.ts";
+import type { ImportStatementNode } from "../ast/import-statement-node.ts";
+import type { InferClauseNode } from "../ast/infer-clause-node.ts";
+import type { InterfaceDeclarationNode } from "../ast/interface-declaration-node.ts";
+import type { LiteralNode } from "../ast/literal-node.ts";
+import type { MappedTypeNode } from "../ast/mapped-type-node.ts";
+import { NodeType } from "../ast/node-type.ts";
+import type { ObjectExpressionNode } from "../ast/object-expression-node.ts";
+import type { PropertyNode } from "../ast/property-node.ts";
+import type { RawExpressionNode } from "../ast/raw-expression-node.ts";
+import type { RuntimeEnumDeclarationNode } from "../ast/runtime-enum-declaration-node.ts";
+import type { StatementNode } from "../ast/statement-node.ts";
+import type { UnionExpressionNode } from "../ast/union-expression-node.ts";
+import { toPascalCase, toScreamingSnakeCase } from "../utils/case-converter.ts";
+import { RuntimeEnumsStyle } from "./runtime-enums-style.ts";
 
 const IDENTIFIER_REGEXP = /^[$A-Z_a-z][\w$]*$/;
 
@@ -49,60 +49,60 @@ export class Serializer {
   }
 
   serializeAliasDeclaration(node: AliasDeclarationNode) {
-    const expression =
-      node.body.type === NodeType.TEMPLATE ? node.body.expression : node.body;
-    let data = '';
+    const expression = node.body.type === NodeType.TEMPLATE
+      ? node.body.expression
+      : node.body;
+    let data = "";
 
-    data += 'type ';
+    data += "type ";
     data += node.name;
 
     if (node.body.type === NodeType.TEMPLATE) {
-      data += '<';
+      data += "<";
 
       for (let i = 0; i < node.body.params.length; i++) {
         if (i >= 1) {
-          data += ', ';
+          data += ", ";
         }
 
         data += node.body.params[i]!;
       }
 
-      data += '>';
+      data += ">";
     }
 
-    data += ' = ';
+    data += " = ";
     data += this.serializeExpression(expression);
-    data += ';';
+    data += ";";
 
     return data;
   }
 
-  serializeArrayExpression(node: ArrayExpressionNode) {
-    const shouldParenthesize =
-      node.values.type === NodeType.INFER_CLAUSE ||
+  serializeArrayExpression(node: ArrayExpressionNode): string {
+    const shouldParenthesize = node.values.type === NodeType.INFER_CLAUSE ||
       (node.values.type === NodeType.UNION_EXPRESSION &&
         node.values.args.length >= 2);
-    let data = '';
+    let data = "";
 
     if (shouldParenthesize) {
-      data += '(';
+      data += "(";
     }
 
     data += this.serializeExpression(node.values);
 
     if (shouldParenthesize) {
-      data += ')';
+      data += ")";
     }
 
-    data += '[]';
+    data += "[]";
 
     return data;
   }
 
   serializeExportStatement(node: ExportStatementNode) {
-    let data = '';
+    let data = "";
 
-    data += 'export ';
+    data += "export ";
 
     switch (node.argument.type) {
       case NodeType.ALIAS_DECLARATION:
@@ -119,7 +119,7 @@ export class Serializer {
     return data;
   }
 
-  serializeExpression(node: ExpressionNode) {
+  serializeExpression(node: ExpressionNode): string {
     switch (node.type) {
       case NodeType.ARRAY_EXPRESSION:
         return this.serializeArrayExpression(node);
@@ -145,51 +145,51 @@ export class Serializer {
   }
 
   serializeExtendsClause(node: ExtendsClauseNode) {
-    let data = '';
+    let data = "";
 
     data += this.serializeExpression(node.checkType);
-    data += ' extends ';
+    data += " extends ";
     data += this.serializeExpression(node.extendsType);
-    data += '\n  ? ';
+    data += "\n  ? ";
     data += this.serializeExpression(node.trueType);
-    data += '\n  : ';
+    data += "\n  : ";
     data += this.serializeExpression(node.falseType);
 
     return data;
   }
 
-  serializeFile(nodes: StatementNode[]) {
-    let data = '';
+  serializeFile(nodes: StatementNode[]): string {
+    let data = "";
 
-    data += '/**\n';
-    data += ' * This file was generated by kysely-codegen.\n';
-    data += ' * Please do not edit it manually.\n';
-    data += ' */\n\n';
+    data += "/**\n";
+    data += " * This file was generated by kysely-codegen.\n";
+    data += " * Please do not edit it manually.\n";
+    data += " */\n\n";
     data += this.serializeStatements(nodes);
 
     return data;
   }
 
-  serializeGenericExpression(node: GenericExpressionNode) {
-    let data = '';
+  serializeGenericExpression(node: GenericExpressionNode): string {
+    let data = "";
 
     data += node.name;
-    data += '<';
+    data += "<";
 
     for (let i = 0; i < node.args.length; i++) {
       if (i >= 1) {
-        data += ', ';
+        data += ", ";
       }
 
       data += this.serializeExpression(node.args[i]!);
     }
 
-    data += '>';
+    data += ">";
 
     return data;
   }
 
-  serializeIdentifier(node: IdentifierNode) {
+  serializeIdentifier(node: IdentifierNode): string {
     if (node.name.length <= 1) {
       return node.name;
     }
@@ -197,63 +197,63 @@ export class Serializer {
     return this.singular ? singular(node.name) : node.name;
   }
 
-  serializeImportClause(node: ImportClauseNode) {
-    let data = '';
+  serializeImportClause(node: ImportClauseNode): string {
+    let data = "";
 
     data += node.name;
 
     if (node.alias) {
-      data += ' as ';
+      data += " as ";
       data += node.alias;
     }
 
     return data;
   }
 
-  serializeImportStatement(node: ImportStatementNode) {
-    let data = '';
+  serializeImportStatement(node: ImportStatementNode): string {
+    let data = "";
     let i = 0;
 
-    data += 'import ';
+    data += "import ";
 
     if (this.typeOnlyImports) {
-      data += 'type ';
+      data += "type ";
     }
 
-    data += '{';
+    data += "{";
 
     for (const importClause of node.imports) {
       if (i >= 1) {
-        data += ',';
+        data += ",";
       }
 
-      data += ' ';
+      data += " ";
       data += this.serializeImportClause(importClause);
       i++;
     }
 
-    data += ' } from ';
+    data += " } from ";
     data += JSON.stringify(node.moduleName);
-    data += ';';
+    data += ";";
 
     return data;
   }
 
   serializeInferClause(node: InferClauseNode) {
-    let data = '';
+    let data = "";
 
-    data += 'infer ';
+    data += "infer ";
     data += node.name;
 
     return data;
   }
 
-  serializeInterfaceDeclaration(node: InterfaceDeclarationNode) {
-    let data = '';
+  serializeInterfaceDeclaration(node: InterfaceDeclarationNode): string {
+    let data = "";
 
-    data += 'interface ';
+    data += "interface ";
     data += this.singular ? singular(node.name) : node.name;
-    data += ' ';
+    data += " ";
     data += this.serializeObjectExpression(node.body);
 
     return data;
@@ -268,55 +268,55 @@ export class Serializer {
   }
 
   serializeMappedType(node: MappedTypeNode) {
-    let data = '';
+    let data = "";
 
-    data += '{\n  [x: string]: ';
+    data += "{\n  [x: string]: ";
     data += this.serializeExpression(node.value);
-    data += ' | undefined;\n}';
+    data += " | undefined;\n}";
 
     return data;
   }
 
   serializeObjectExpression(node: ObjectExpressionNode) {
-    let data = '';
+    let data = "";
 
-    data += '{';
+    data += "{";
 
     if (node.properties.length > 0) {
-      data += '\n';
+      data += "\n";
 
       const sortedProperties = [...node.properties].sort((a, b) =>
-        a.key.localeCompare(b.key),
+        a.key.localeCompare(b.key)
       );
 
       for (const property of sortedProperties) {
-        data += '  ';
+        data += "  ";
         data += this.serializeProperty(property);
       }
     }
 
-    data += '}';
+    data += "}";
 
     return data;
   }
 
   serializeProperty(node: PropertyNode) {
-    let data = '';
+    let data = "";
 
     if (node.comment) {
-      data += '/**\n';
+      data += "/**\n";
 
       for (const line of node.comment.split(/\r?\n/)) {
-        data += `   *${line ? ` ${line}` : ''}\n`;
+        data += `   *${line ? ` ${line}` : ""}\n`;
       }
 
-      data += '   */\n  ';
+      data += "   */\n  ";
     }
 
     data += this.serializeKey(node.key);
-    data += ': ';
+    data += ": ";
     data += this.serializeExpression(node.value);
-    data += ';\n';
+    data += ";\n";
 
     return data;
   }
@@ -326,17 +326,17 @@ export class Serializer {
   }
 
   serializeRuntimeEnum(node: RuntimeEnumDeclarationNode) {
-    let data = 'enum ';
+    let data = "enum ";
 
     data += node.name;
-    data += ' {\n';
+    data += " {\n";
 
     const members = [...node.members].sort(([a], [b]) => {
       return a.localeCompare(b);
     });
 
     for (const member of members) {
-      data += '  ';
+      data += "  ";
 
       if (this.runtimeEnumsStyle === RuntimeEnumsStyle.PASCAL_CASE) {
         data += toPascalCase(member[0]);
@@ -344,27 +344,27 @@ export class Serializer {
         data += toScreamingSnakeCase(member[0]);
       }
 
-      data += ' = ';
+      data += " = ";
       data += this.serializeLiteral(member[1]);
-      data += ',';
-      data += '\n';
+      data += ",";
+      data += "\n";
     }
 
-    data += '}';
+    data += "}";
 
     return data;
   }
 
   serializeStatements(nodes: StatementNode[]) {
-    let data = '';
+    let data = "";
     let i = 0;
 
     for (const node of nodes) {
       if (i >= 1) {
-        data += '\n';
+        data += "\n";
 
         if (node.type !== NodeType.IMPORT_STATEMENT) {
-          data += '\n';
+          data += "\n";
         }
       }
 
@@ -380,23 +380,23 @@ export class Serializer {
       i++;
     }
 
-    data += '\n';
+    data += "\n";
 
     return data;
   }
 
-  serializeUnionExpression(node: UnionExpressionNode) {
-    let data = '';
+  serializeUnionExpression(node: UnionExpressionNode): string {
+    let data = "";
     let i = 0;
 
     const sortedArgs = [...node.args].sort((a, b) => {
       if (a.type !== NodeType.IDENTIFIER || b.type !== NodeType.IDENTIFIER) {
         return 0;
       }
-      if (a.name === undefined || a.name === 'undefined') return 1;
-      if (b.name === undefined || b.name === 'undefined') return -1;
-      if (a.name === null || a.name === 'null') return 1;
-      if (b.name === null || b.name === 'null') return -1;
+      if (a.name === undefined || a.name === "undefined") return 1;
+      if (b.name === undefined || b.name === "undefined") return -1;
+      if (a.name === null || a.name === "null") return 1;
+      if (b.name === null || b.name === "null") return -1;
       if (a.name < b.name) return -1;
       if (a.name > b.name) return 1;
       return 0;
@@ -404,7 +404,7 @@ export class Serializer {
 
     for (const arg of sortedArgs) {
       if (i >= 1) {
-        data += ' | ';
+        data += " | ";
       }
 
       data += this.serializeExpression(arg);

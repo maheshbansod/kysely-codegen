@@ -16,8 +16,7 @@ export enum TestStatus {
   GHI_JKL = "GHI_JKL",
 }
 
-export type ArrayType<T> = ArrayTypeImpl<T> extends (infer U)[]
-  ? U[]
+export type ArrayType<T> = ArrayTypeImpl<T> extends (infer U)[] ? U[]
   : ArrayTypeImpl<T>;
 
 export type ArrayTypeImpl<T> = T extends ColumnType<infer S, infer I, infer U>
@@ -28,7 +27,11 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
   : ColumnType<T, T | undefined, T>;
 
-export type Interval = ColumnType<IPostgresInterval, IPostgresInterval | number | string, IPostgresInterval | number | string>;
+export type Interval = ColumnType<
+  IPostgresInterval,
+  IPostgresInterval | number | string,
+  IPostgresInterval | number | string
+>;
 
 export type Json = JsonValue;
 

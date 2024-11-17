@@ -1,5 +1,5 @@
-import type { ColumnMetadataOptions } from './column-metadata.ts';
-import { ColumnMetadata } from './column-metadata.ts';
+import type { ColumnMetadataOptions } from "./column-metadata.ts";
+import { ColumnMetadata } from "./column-metadata.ts";
 
 export type TableMetadataOptions = {
   columns: ColumnMetadataOptions[];

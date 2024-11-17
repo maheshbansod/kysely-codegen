@@ -1,7 +1,7 @@
-import { config as loadEnv } from 'dotenv';
-import { expand as expandEnv } from 'dotenv-expand';
-import type { DialectName } from './dialect-manager.ts';
-import type { Logger } from './logger/logger.ts';
+import { config as loadEnv } from "dotenv";
+import { expand as expandEnv } from "dotenv-expand";
+import type { DialectName } from "./dialect-manager.ts";
+import type { Logger } from "./logger/logger.ts";
 
 const CALL_STATEMENT_REGEXP = /^\s*([a-z]+)\s*\(\s*(.*)\s*\)\s*$/;
 const DIALECT_PARTS_REGEXP = /([^:]*)(.*)/;
@@ -27,26 +27,26 @@ type ParsedConnectionString = {
  */
 export class ConnectionStringParser {
   #inferDialectName(connectionString: string): DialectName {
-    if (connectionString.startsWith('libsql')) {
-      return 'libsql';
+    if (connectionString.startsWith("libsql")) {
+      return "libsql";
     }
 
-    if (connectionString.startsWith('mysql')) {
-      return 'mysql';
+    if (connectionString.startsWith("mysql")) {
+      return "mysql";
     }
 
     if (
-      connectionString.startsWith('postgres') ||
-      connectionString.startsWith('pg')
+      connectionString.startsWith("postgres") ||
+      connectionString.startsWith("pg")
     ) {
-      return 'postgres';
+      return "postgres";
     }
 
-    if (connectionString.toLowerCase().includes('user id=')) {
-      return 'mssql';
+    if (connectionString.toLowerCase().includes("user id=")) {
+      return "mssql";
     }
 
-    return 'sqlite';
+    return "sqlite";
   }
 
   parse(options: ParseConnectionStringOptions): ParsedConnectionString {
@@ -57,7 +57,7 @@ export class ConnectionStringParser {
     if (expressionMatch) {
       const name = expressionMatch[1]!;
 
-      if (name !== 'env') {
+      if (name !== "env") {
         throw new ReferenceError(`Function '${name}' is not defined.`);
       }
 
@@ -72,17 +72,17 @@ export class ConnectionStringParser {
         );
       }
 
-      if (typeof key !== 'string') {
+      if (typeof key !== "string") {
         throw new TypeError(
           `Argument 0 of function '${name}' must be a string.`,
         );
       }
 
       const { error } = expandEnv(loadEnv({ path: options.envFile }));
-      const envFile = options.envFile ?? '.env';
+      const envFile = options.envFile ?? ".env";
 
       if (error) {
-        if (error.name === 'ENOENT') {
+        if (error.name === "ENOENT") {
           throw new ReferenceError(
             `Environment file '${envFile}' could not be found. Use --env-file to specify a different file.`,
           );
@@ -106,11 +106,12 @@ export class ConnectionStringParser {
     const parts = connectionString.match(DIALECT_PARTS_REGEXP)!;
     const protocol = parts[1]!;
     const tail = parts[2]!;
-    const normalizedConnectionString =
-      protocol === 'pg' ? `postgres${tail}` : connectionString;
+    const normalizedConnectionString = protocol === "pg"
+      ? `postgres${tail}`
+      : connectionString;
 
-    const inferredDialectName =
-      options.dialectName ?? this.#inferDialectName(connectionString);
+    const inferredDialectName = options.dialectName ??
+      this.#inferDialectName(connectionString);
 
     return {
       connectionString: normalizedConnectionString,

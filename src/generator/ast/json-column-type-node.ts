@@ -1,5 +1,5 @@
-import type { ExpressionNode } from './expression-node.ts';
-import { GenericExpressionNode } from './generic-expression-node.ts';
+import type { ExpressionNode } from "./expression-node.ts";
+import { GenericExpressionNode } from "./generic-expression-node.ts";
 
 export class JsonColumnTypeNode extends GenericExpressionNode {
   constructor(
@@ -9,6 +9,6 @@ export class JsonColumnTypeNode extends GenericExpressionNode {
       | [insertType: ExpressionNode]
       | [insertType: ExpressionNode, updateType: ExpressionNode]
   ) {
-    super('JSONColumnType', [selectType, ...args]);
+    super("JSONColumnType", [selectType, ...args]);
   }
 }

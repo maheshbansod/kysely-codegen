@@ -1,4 +1,4 @@
-import micromatch from 'micromatch';
+import micromatch from "micromatch";
 const matcher = micromatch.matcher;
 
 export class TableMatcher {
@@ -7,11 +7,11 @@ export class TableMatcher {
 
   constructor(pattern: string) {
     this.isMatch = matcher(pattern, { nocase: true });
-    this.isSimpleGlob = !pattern.includes('.');
+    this.isSimpleGlob = !pattern.includes(".");
   }
 
   match(schema: string | undefined, name: string) {
-    const string = this.isSimpleGlob ? name : `${schema ?? '*'}.${name}`;
+    const string = this.isSimpleGlob ? name : `${schema ?? "*"}.${name}`;
     return this.isMatch(string);
   }
 }

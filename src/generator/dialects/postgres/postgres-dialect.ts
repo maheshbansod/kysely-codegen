@@ -1,8 +1,8 @@
-import type { DateParser } from '../../../introspector/dialects/postgres/date-parser.ts';
-import type { NumericParser } from '../../../introspector/dialects/postgres/numeric-parser.ts';
-import { PostgresIntrospectorDialect } from '../../../introspector/dialects/postgres/postgres-dialect.ts';
-import type { GeneratorDialect } from '../../dialect.ts';
-import { PostgresAdapter } from './postgres-adapter.ts';
+import type { DateParser } from "../../../introspector/dialects/postgres/date-parser.ts";
+import type { NumericParser } from "../../../introspector/dialects/postgres/numeric-parser.ts";
+import { PostgresIntrospectorDialect } from "../../../introspector/dialects/postgres/postgres-dialect.ts";
+import type { GeneratorDialect } from "../../dialect.ts";
+import { PostgresAdapter } from "./postgres-adapter.ts";
 
 type PostgresDialectOptions = {
   dateParser?: DateParser;
@@ -12,10 +12,8 @@ type PostgresDialectOptions = {
   partitions?: boolean;
 };
 
-export class PostgresDialect
-  extends PostgresIntrospectorDialect
-  implements GeneratorDialect
-{
+export class PostgresDialect extends PostgresIntrospectorDialect
+  implements GeneratorDialect {
   readonly adapter: PostgresAdapter;
 
   constructor(options?: PostgresDialectOptions) {

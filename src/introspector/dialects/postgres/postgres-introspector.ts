@@ -1,16 +1,16 @@
 import type {
-  Kysely,
   ColumnMetadata as KyselyColumnMetaData,
+  Kysely,
   TableMetadata as KyselyTableMetadata,
-} from 'kysely';
-import { sql } from 'kysely';
-import { EnumCollection } from '../../enum-collection.ts';
-import type { IntrospectOptions } from '../../introspector.ts';
-import { Introspector } from '../../introspector.ts';
-import type { ColumnMetadata } from '../../metadata/column-metadata.ts';
-import { DatabaseMetadata } from '../../metadata/database-metadata.ts';
-import type { TableMetadata } from '../../metadata/table-metadata.ts';
-import type { PostgresDB } from './postgres-db.ts';
+} from "kysely";
+import { sql } from "kysely";
+import { EnumCollection } from "../../enum-collection.ts";
+import type { IntrospectOptions } from "../../introspector.ts";
+import { Introspector } from "../../introspector.ts";
+import type { ColumnMetadata } from "../../metadata/column-metadata.ts";
+import { DatabaseMetadata } from "../../metadata/database-metadata.ts";
+import type { TableMetadata } from "../../metadata/table-metadata.ts";
+import type { PostgresDB } from "./postgres-db.ts";
 
 type PostgresDomainInspector = {
   rootType: string;
@@ -39,7 +39,7 @@ export class PostgresIntrospector extends Introspector<PostgresDB> {
       defaultSchemas:
         options?.defaultSchemas && options.defaultSchemas.length > 0
           ? options.defaultSchemas
-          : ['public'],
+          : ["public"],
       domains: options?.domains ?? true,
       partitions: options?.partitions,
     };
@@ -61,9 +61,11 @@ export class PostgresIntrospector extends Introspector<PostgresDB> {
         const columns = table.columns.map((column): ColumnMetadata => {
           const dataType = this.#getRootType(column, domains);
           const enumValues = enums.get(
-            `${column.dataTypeSchema ?? this.options.defaultSchemas}.${dataType}`,
+            `${
+              column.dataTypeSchema ?? this.options.defaultSchemas
+            }.${dataType}`,
           );
-          const isArray = dataType.startsWith('_');
+          const isArray = dataType.startsWith("_");
 
           return {
             comment: column.comment ?? null,
@@ -149,17 +151,17 @@ export class PostgresIntrospector extends Introspector<PostgresDB> {
 
     const rows = await db
       .withoutPlugins()
-      .selectFrom('pg_type as type')
-      .innerJoin('pg_enum as enum', 'type.oid', 'enum.enumtypid')
+      .selectFrom("pg_type as type")
+      .innerJoin("pg_enum as enum", "type.oid", "enum.enumtypid")
       .innerJoin(
-        'pg_catalog.pg_namespace as namespace',
-        'namespace.oid',
-        'type.typnamespace',
+        "pg_catalog.pg_namespace as namespace",
+        "namespace.oid",
+        "type.typnamespace",
       )
       .select([
-        'namespace.nspname as schemaName',
-        'type.typname as enumName',
-        'enum.enumlabel as enumValue',
+        "namespace.nspname as schemaName",
+        "type.typname as enumName",
+        "enum.enumlabel as enumValue",
       ])
       .execute();
 

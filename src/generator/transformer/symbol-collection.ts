@@ -1,13 +1,13 @@
-import type { ExpressionNode } from '../ast/expression-node.ts';
-import type { LiteralNode } from '../ast/literal-node.ts';
-import type { ModuleReferenceNode } from '../ast/module-reference-node.ts';
-import type { RuntimeEnumDeclarationNode } from '../ast/runtime-enum-declaration-node.ts';
-import type { TemplateNode } from '../ast/template-node.ts';
+import type { ExpressionNode } from "../ast/expression-node.ts";
+import type { LiteralNode } from "../ast/literal-node.ts";
+import type { ModuleReferenceNode } from "../ast/module-reference-node.ts";
+import type { RuntimeEnumDeclarationNode } from "../ast/runtime-enum-declaration-node.ts";
+import type { TemplateNode } from "../ast/template-node.ts";
 import {
   toKyselyPascalCase,
   toScreamingSnakeCase,
-} from '../utils/case-converter.ts';
-import { IdentifierStyle } from './identifier-style.ts';
+} from "../utils/case-converter.ts";
+import { IdentifierStyle } from "./identifier-style.ts";
 
 export type SymbolEntry = [id: string, symbol: SymbolNode];
 
@@ -19,18 +19,18 @@ export type SymbolNode =
   | { node: ExpressionNode | TemplateNode; type: SymbolType.DEFINITION }
   | { node: ModuleReferenceNode; type: SymbolType.MODULE_REFERENCE }
   | {
-      node: RuntimeEnumDeclarationNode;
-      type: SymbolType.RUNTIME_ENUM_DEFINITION;
-    }
+    node: RuntimeEnumDeclarationNode;
+    type: SymbolType.RUNTIME_ENUM_DEFINITION;
+  }
   | { node: LiteralNode<string>; type: SymbolType.RUNTIME_ENUM_MEMBER }
   | { type: SymbolType.TABLE };
 
 export const enum SymbolType {
-  DEFINITION = 'Definition',
-  MODULE_REFERENCE = 'ModuleReference',
-  RUNTIME_ENUM_DEFINITION = 'RuntimeEnumDefinition',
-  RUNTIME_ENUM_MEMBER = 'RuntimeEnumMember',
-  TABLE = 'Table',
+  DEFINITION = "Definition",
+  MODULE_REFERENCE = "ModuleReference",
+  RUNTIME_ENUM_DEFINITION = "RuntimeEnumDefinition",
+  RUNTIME_ENUM_MEMBER = "RuntimeEnumMember",
+  TABLE = "Table",
 }
 
 export class SymbolCollection {
@@ -42,11 +42,11 @@ export class SymbolCollection {
     entries?: SymbolEntry[];
     identifierStyle?: IdentifierStyle;
   }) {
-    this.identifierStyle =
-      options?.identifierStyle ?? IdentifierStyle.KYSELY_PASCAL_CASE;
+    this.identifierStyle = options?.identifierStyle ??
+      IdentifierStyle.KYSELY_PASCAL_CASE;
 
-    const entries =
-      options?.entries?.sort(([a], [b]) => a.localeCompare(b)) ?? [];
+    const entries = options?.entries?.sort(([a], [b]) => a.localeCompare(b)) ??
+      [];
 
     for (const [id, symbol] of entries) {
       this.set(id, symbol);
@@ -87,7 +87,7 @@ export class SymbolCollection {
       this.identifierStyle === IdentifierStyle.SCREAMING_SNAKE_CASE
         ? toScreamingSnakeCase
         : toKyselyPascalCase;
-    symbolName = caseConverter(id.replaceAll(/[^\w$]/g, '_'));
+    symbolName = caseConverter(id.replaceAll(/[^\w$]/g, "_"));
 
     if (symbolNames.has(symbolName)) {
       let suffix = 2;

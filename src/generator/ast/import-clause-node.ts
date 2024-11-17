@@ -1,4 +1,4 @@
-import { NodeType } from './node-type.ts';
+import { NodeType } from "./node-type.ts";
 
 export class ImportClauseNode {
   readonly alias: string | null;
